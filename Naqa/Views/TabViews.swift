@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Observation
+
 enum AppScreen: Hashable, Identifiable, CaseIterable {
     
     case calculator
@@ -30,7 +32,7 @@ extension AppScreen {
     var destination: some View {
         switch self {
         case .calculator:
-            Text("الحاسبة")
+            CalculatorNavigationStack()
         case .stocks:
             Text("القوائم")
         }
@@ -72,14 +74,14 @@ struct CalculatorNavigationStack: View {
         @Bindable var router = router
         
         NavigationStack(path: $router.calculatorRoutes) {
-            Button("Plants Go to detail") {
+            Button("ابحث") {
                 router.calculatorRoutes.append(.search)
             }.navigationDestination(for: CalculatorRoute.self) { route in
                 switch route {
                 case .main:
-                        Text("main")
+                    Text("الحاسبة")
                 case .search:
-                        Text("search")
+                    Text("بحث")
                 }
             }
         }
