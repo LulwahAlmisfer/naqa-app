@@ -16,3 +16,4 @@ build/
 *.ipa/
 *.dSYM/
 *.xcarchive/
+Breakpoints_v2.xcbkptlist

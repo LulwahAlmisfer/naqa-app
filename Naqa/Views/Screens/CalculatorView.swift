@@ -39,7 +39,7 @@ struct CalculatorView: View {
                 Task{ try await model.calculatePurificationForYear() }
             }
             
-            if model.isLoading {
+            if model.isLoadingAnswer {
                 ProgressView()
             }
             
@@ -50,6 +50,9 @@ struct CalculatorView: View {
             }
         }
         .padding()
+        .alert(item: $model.error) { error in
+            Alert(title: Text("Error"), message: Text(error.message), dismissButton: .default(Text("OK")))
+        }
     }
     
     var picker: some View {

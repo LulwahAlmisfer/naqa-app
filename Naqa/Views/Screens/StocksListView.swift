@@ -31,6 +31,9 @@ struct StocksListView: View {
             .searchable(text: .constant(""))
         }
         .ignoresSafeArea()
+        .onChange(of: model.selectedYear) { _ , _ in
+            Task{ await model.getStocksForSelectedYear() }
+        }
     }
     
     var picker: some View {
