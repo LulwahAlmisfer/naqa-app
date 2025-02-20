@@ -65,6 +65,8 @@ class StockService {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
         urlRequest.httpBody = requestBody
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
         
         let (data, error) = try await URLSession.shared.data(for: urlRequest)
         print(error)
