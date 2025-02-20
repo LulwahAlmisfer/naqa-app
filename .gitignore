@@ -1,0 +1,18 @@
+# Xcode
+DerivedData/
+*.xcworkspace/
+*.xcuserstate
+*.xcscmblueprint
+!default.xcworkspace/
+
+# User-specific Xcode settings
+*.xcuserdatad/
+*.xcuserstate
+*.xcscmblueprint
+
+# Build files
+build/
+*.app/
+*.ipa/
+*.dSYM/
+*.xcarchive/
