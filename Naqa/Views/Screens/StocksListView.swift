@@ -15,29 +15,32 @@ struct StocksListView: View {
             VStack{
                 picker
                 
-                List(model.stocks) { stock in
+                List(model.screen1FilteredStocks) { stock in
                     HStack {
-//                        Image(stock.code)
-//                            .resizable()
-//                            .frame(width: 30,height: 30)
-//                            .clipShape(.circle)
+                        Image(stock.code)
+                            .resizable()
+                            .frame(width: 30,height: 30)
+                            .clipShape(.circle)
                         Text(stock.name)
+                        
+                        Text(stock.shariaOpinion.rawValue)
+                            .foregroundStyle(stock.shariaOpinion.color)
                     }
                 }
                 
             }
             .navigationTitle("القوائم")
             .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: .constant(""))
+            .searchable(text: $model.screen1SearchText ,placement:.navigationBarDrawer(displayMode: .always))
         }
         .ignoresSafeArea()
-        .onChange(of: model.selectedYear) { _ , _ in
-            Task{ await model.getStocksForSelectedYear() }
+        .onChange(of: model.screen1SelectedYear) { _ , _ in
+            Task{ await model.getStocksForScreen1SelectedYear() }
         }
     }
     
     var picker: some View {
-        Picker("اختر السنة", selection: $model.selectedYear) {
+        Picker("اختر السنة", selection: $model.screen1SelectedYear) {
               ForEach(model.years, id: \.self) { year in
                   Text(year).tag(year)
               }

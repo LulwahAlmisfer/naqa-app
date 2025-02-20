@@ -56,7 +56,7 @@ struct CalculatorView: View {
     }
     
     var picker: some View {
-        Picker("اختر السنة", selection: $model.selectedYear) {
+        Picker("اختر السنة", selection: $model.screen2SelectedYear) {
               ForEach(model.years, id: \.self) { year in
                   Text(year).tag(year)
               }
@@ -71,7 +71,7 @@ struct SearchCompaniesView: View {
     
     var body: some View {
         
-        List(model.stocks) { stock in
+        List(model.screen2FilteredStocks) { stock in
             Button{
                 model.selectedStock = stock
                 dismiss()
@@ -87,6 +87,6 @@ struct SearchCompaniesView: View {
         }
         .navigationTitle("الشركات")
         .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: .constant(""))
+        .searchable(text: $model.screen2SearchText,placement:.navigationBarDrawer(displayMode: .always))
     }
 }

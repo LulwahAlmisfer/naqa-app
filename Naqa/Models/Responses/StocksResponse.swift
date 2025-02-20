@@ -54,6 +54,19 @@ enum ShariaOpinion: String, CaseIterable,Codable {
         }
     }
     
+    var order: Int {
+        switch self {
+        case .pure:
+            1
+        case .mixed:
+            2
+        case .nonCompliant:
+            3
+        case .none:
+            4
+        }
+    }
+    
     var color: Color {
         switch self {
         case .pure:
