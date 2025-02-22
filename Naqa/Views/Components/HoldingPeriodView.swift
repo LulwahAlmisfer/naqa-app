@@ -9,9 +9,10 @@ import SwiftUI
 
 struct HoldingPeriodView: View {
     @State private var selectionMode: SelectionMode = .dateRange
-    @State private var fromDate: Date = Date()
-    @State private var toDate: Date = Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date()
     @State private var daysCount: String = ""
+    
+    @Binding var fromDate: Date
+    @Binding var toDate: Date
 
     enum SelectionMode: String, CaseIterable {
         case dateRange = "تحديد بالتواريخ"
@@ -21,6 +22,7 @@ struct HoldingPeriodView: View {
     var body: some View {
         Section(header: Text("فترة التملك")) {
 
+            //TODO: add logic when changing the picker (with temp value)
             Picker("Selection Mode", selection: $selectionMode) {
                 ForEach(SelectionMode.allCases, id: \.self) { mode in
                     Text(mode.rawValue)

@@ -13,6 +13,9 @@ enum OrderError: Error {
 
 @MainActor
 class Model: ObservableObject {
+    @Published var fromDate: Date = .now
+    @Published var toDate: Date = .now
+
     @Published var screen1SelectedYear: String = "2015"
     @Published var screen2SelectedYear: String = "2015"
     @Published var years: [String] = []
@@ -42,8 +45,6 @@ class Model: ObservableObject {
     @Published var response: CalculatePurificationResponse? = nil
     @Published var selectedStock: Stock?
     @Published var stocksCount: String = ""
-    @Published var startDate: Date = .now
-    @Published var endDate: Date = .now
     
     @Published var isLoadingAnswer: Bool = false
     @Published var error: NaqaErrorResponse?
@@ -67,6 +68,9 @@ class Model: ObservableObject {
             if let lastYear = years.last {
                 self.screen1SelectedYear = lastYear
                 self.screen2SelectedYear = lastYear
+                
+                fromDate = lastYear.firstDayOfYear()
+                toDate = lastYear.lastDayOfYear()
             }
         } catch {
             print(error)
@@ -101,14 +105,14 @@ class Model: ObservableObject {
     
     
     func calculatePurificationForYear() async throws {
-        let year = Calendar.current.dateComponents([.year], from: startDate).year
+        
         guard let code = selectedStock?.code, let stocksCountInt = Int(stocksCount) else {
             return
         }
         
         do {
             isLoadingAnswer = true
-            self.response = try await stockService.calculatePurification(year: year!.description, request: .init(startDate: startDate, endDate: endDate, numberOfStocks: stocksCountInt, stockCode: code))
+            self.response = try await stockService.calculatePurification(year: screen2SelectedYear, request: .init(startDate: fromDate, endDate: toDate, numberOfStocks: stocksCountInt, stockCode: code))
             isLoadingAnswer = false
         } catch let error as StockServiceError {
             isLoadingAnswer = false
@@ -117,6 +121,14 @@ class Model: ObservableObject {
             isLoadingAnswer = false
             print("Unexpected error: \(error.localizedDescription)")
         }
+    }
+    
+    func clear() {
+        response = nil
+        fromDate = screen2SelectedYear.firstDayOfYear()
+        toDate = screen2SelectedYear.lastDayOfYear()
+        stocksCount = ""
+        selectedStock = nil
     }
     
     func handleStockServiceError(_ error: StockServiceError) {
