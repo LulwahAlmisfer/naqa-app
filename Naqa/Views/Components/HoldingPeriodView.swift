@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HoldingPeriodView: View {
     @State private var selectionMode: SelectionMode = .dateRange
-    @State private var daysCount: String = ""
+    @Binding var daysCount: String 
     
     @Binding var fromDate: Date
     @Binding var toDate: Date

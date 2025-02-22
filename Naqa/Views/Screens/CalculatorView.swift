@@ -27,7 +27,7 @@ struct CalculatorView: View {
             
             TextField("عدد الأسهم", text: $model.stocksCount)
          
-            HoldingPeriodView(fromDate: $model.fromDate, toDate: $model.toDate)
+            HoldingPeriodView(daysCount: $model.daysCount, fromDate: $model.fromDate, toDate: $model.toDate)
             
             Button("إحسب") {
                 Task{ try await model.calculatePurificationForYear() }

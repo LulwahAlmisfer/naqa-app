@@ -23,8 +23,15 @@ struct StocksListView: View {
                             .clipShape(.circle)
                         Text(stock.name)
                         
+                        Spacer()
+                        
+                        Text(stock.purification)
+                      
                         Text(stock.shariaOpinion.rawValue)
                             .foregroundStyle(stock.shariaOpinion.color)
+                            .padding(8)
+                            .background(stock.shariaOpinion.color.opacity(0.2))
+                            .clipShape(.capsule)
                     }
                 }
                 
