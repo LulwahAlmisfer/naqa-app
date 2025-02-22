@@ -5,7 +5,7 @@
 //  Created by Lulwah almisfer on 22/02/2025.
 //
 
-import Foundation
+import SwiftUI
 
 extension String {
 
@@ -33,4 +33,8 @@ extension Date {
     func addOneDay() -> Date {
         return Calendar.current.date(byAdding: .day, value: 1, to: self) ?? self
     }
+}
+
+func hideKeyboard() {
+    UIApplication.shared.sendAction(#selector(UIResponder.resolveInstanceMethod), to: nil, from: nil, for: nil)
 }
