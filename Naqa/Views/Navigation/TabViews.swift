@@ -82,5 +82,6 @@ struct CalculatorNavigationStack: View {
                 .navigationTitle("الحاسبة")
                 .navigationBarTitleDisplayMode(.inline)
         }
+        .ignoresSafeArea()
     }
 }

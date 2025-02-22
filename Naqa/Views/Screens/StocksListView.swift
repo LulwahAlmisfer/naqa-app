@@ -12,7 +12,7 @@ struct StocksListView: View {
 
     var body: some View {
         NavigationStack{
-            VStack{
+            Form {
                 picker
                 
                 List(model.screen1FilteredStocks) { stock in
