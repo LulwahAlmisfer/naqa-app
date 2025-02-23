@@ -10,9 +10,22 @@
 		2F1CAA2D2D64878E007D1FEB /* Naqa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Naqa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		2FC5FBB12D6B8721005B666E /* Exceptions for "Naqa" folder in "Naqa" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 2F1CAA2C2D64878E007D1FEB /* Naqa */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2F1CAA2F2D64878E007D1FEB /* Naqa */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				2FC5FBB12D6B8721005B666E /* Exceptions for "Naqa" folder in "Naqa" target */,
+			);
 			path = Naqa;
 			sourceTree = "<group>";
 		};
@@ -255,6 +268,7 @@
 				DEVELOPMENT_TEAM = 6ADLC37UA5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Naqa/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "نقاء";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -290,6 +304,7 @@
 				DEVELOPMENT_TEAM = 6ADLC37UA5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Naqa/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "نقاء";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
