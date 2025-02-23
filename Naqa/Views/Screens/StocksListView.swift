@@ -38,6 +38,9 @@ struct StocksListView: View {
                         
                         Text(stock.name)
                         
+                        Text(stock.code)
+                            .font(.caption)
+                        
                         Spacer()
                         
                         if let purification = stock.purification {
