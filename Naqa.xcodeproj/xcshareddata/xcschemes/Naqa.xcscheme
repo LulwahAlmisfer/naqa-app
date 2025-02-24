@@ -54,7 +54,7 @@
       <AdditionalOptions>
          <AdditionalOption
             key = "APP_DISTRIBUTOR_ID_OVERRIDE"
-            value = "com.apple.AppStore"
+            value = "com.apple.TestFlight"
             isEnabled = "YES">
          </AdditionalOption>
       </AdditionalOptions>
