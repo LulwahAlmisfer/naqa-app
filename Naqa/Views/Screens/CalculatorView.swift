@@ -11,24 +11,36 @@ struct CalculatorView: View {
     @EnvironmentObject private var model: Model
     @Environment(Router.self) private var router
     
+    @Environment(\.layoutDirection) private var layoutDirection
+    @State private var showSheet = false
     
     var body: some View {
         @Bindable var router = router
 
         Form{
-            
-            Button {
-                hideKeyboard()
-                router.calculatorRoutes.append(.search)
-            } label: {
-                Text(model.selectedStock?.name ?? "إختر شركة")
+            Section("معلومات الشراء") {
+                Button {
+                    hideKeyboard()
+                    router.calculatorRoutes.append(.search)
+                } label: {
+                    HStack {
+                        if let code = model.selectedStock?.code {
+                            CompanyLogoView(code: code)
+                        }
+                        Text(model.selectedStock?.name ?? "إختر شركة")
+                        Spacer()
+                        Image(systemName: "chevron.left")
+                    }
+                }
+                
+                TextField("عدد الأسهم", text: $model.stocksCount)
+                    //.keyboardType(.asciiCapableNumberPad)
+                // todo fix this 
+                
+                picker
+                
             }
-            
-            picker
-            
-            TextField("عدد الأسهم", text: $model.stocksCount)
-                .keyboardType(.asciiCapableNumberPad)
-
+          
             HoldingPeriodView(daysCount: $model.daysCount, fromDate: $model.fromDate, toDate: $model.toDate)
             
             Button("إحسب") {
@@ -47,20 +59,53 @@ struct CalculatorView: View {
                 Text("عدد أيام الاحتفاظ: \(result.daysHeld.description)")
             }
         }
+        .scaleEffect(x: self.layoutDirection == .rightToLeft ? -1 : 1)
         .toolbar { ToolbarItem(placement: .topBarLeading) { clearButton } }
         .alert(item: $model.error) { error in
             Alert(title: Text("حدث خطأ"), message: Text(error.message), dismissButton: .default(Text("اغلاق")))
         }
+        .onChange(of: model.screen2SelectedYear) { _, _ in
+            model.selectedStock = nil
+            Task { await model.getStocksForScreen2SelectedYear() }
+        }
     }
     
     var picker: some View {
-        Picker("اختر السنة", selection: $model.screen2SelectedYear) {
-              ForEach(model.years, id: \.self) { year in
-                  Text(year).tag(year)
-              }
-          }
-      }
-    
+        Button(action: { showSheet.toggle() }) {
+            HStack {
+                Text("إختر السنة")
+                Spacer()
+                  Text(model.screen2SelectedYear)
+                      .foregroundColor(.primary)
+                Image(systemName: "chevron.down")
+                    .foregroundColor(.purple)
+            }
+            .padding(8)
+        }
+        .sheet(isPresented: $showSheet) {
+            NavigationView {
+                List(model.years.reversed(), id: \.self) { year in
+                    Button(action: {
+                        model.screen2SelectedYear = year
+                        showSheet = false
+                    }) {
+                        HStack {
+                            Text(year)
+                            Spacer()
+                            if model.screen2SelectedYear == year {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                        .padding(.vertical, 5)
+                    }
+                }
+                .scaleEffect(x: self.layoutDirection == .rightToLeft ? -1 : 1)
+                .navigationTitle("اختر السنة")
+            }
+            .presentationDetents([.medium])
+            .presentationDragIndicator(.visible)
+        }
+    }
     var clearButton: some View {
         Button("مسح"){
             model.clear()
@@ -72,6 +117,7 @@ struct CalculatorView: View {
 struct SearchCompaniesView: View {
     @EnvironmentObject private var model: Model
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.layoutDirection) private var layoutDirection
 
     
     var body: some View {
@@ -90,6 +136,7 @@ struct SearchCompaniesView: View {
                 }
             }
         }
+        .scaleEffect(x: self.layoutDirection == .rightToLeft ? -1 : 1)
         .navigationTitle("الشركات")
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $model.screen2SearchText,placement:.navigationBarDrawer(displayMode: .always))

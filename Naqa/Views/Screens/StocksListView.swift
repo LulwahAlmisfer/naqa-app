@@ -10,6 +10,8 @@ import SwiftUI
 struct StocksListView: View {
     @EnvironmentObject private var model: Model
     @State private var selectedMarket: Market = .main
+    @Environment(\.layoutDirection) private var layoutDirection
+    @State private var showSheet = false
 
     enum Market: String, CaseIterable {
         case main = "السوق الرئيسي"
@@ -29,12 +31,9 @@ struct StocksListView: View {
                 
                 picker
                 
-                List(filteredStocks) { stock in
+                ForEach(filteredStocks) { stock in
                     HStack {
-                        Image(stock.code)
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .clipShape(.circle)
+                        CompanyLogoView(code: stock.code)
                         
                         Text(stock.name)
                         
@@ -56,9 +55,10 @@ struct StocksListView: View {
                     }
                 }
             }
+            .scaleEffect(x: self.layoutDirection == .rightToLeft ? -1 : 1)
             .navigationTitle("القوائم")
-           // .navigationBarTitleDisplayMode(.)
-            .searchable(text: $model.screen1SearchText, placement: .navigationBarDrawer(displayMode: .always))
+            .searchable(text: $model.screen1SearchText, placement: .navigationBarDrawer(displayMode: .always)
+                        ,prompt:"إبحث بالاسم أو الرمز")
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     marketSegmentedControl
@@ -83,10 +83,38 @@ struct StocksListView: View {
     }
 
     var picker: some View {
-        Picker("اختر السنة", selection: $model.screen1SelectedYear) {
-            ForEach(model.years, id: \.self) { year in
-                Text(year).tag(year)
+        Button(action: { showSheet.toggle() }) {
+            HStack {
+                  Text(model.screen1SelectedYear)
+                      .foregroundColor(.primary)
+                Image(systemName: "chevron.down")
+                    .foregroundColor(.purple)
+                Spacer()
             }
+            .padding(8)
+        }
+        .sheet(isPresented: $showSheet) {
+            NavigationView {
+                List(model.years.reversed(), id: \.self) { year in
+                    Button(action: {
+                        model.screen1SelectedYear = year
+                        showSheet = false
+                    }) {
+                        HStack {
+                            Text(year)
+                            Spacer()
+                            if model.screen1SelectedYear == year {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                        .padding(.vertical, 5)
+                    }
+                }
+                .scaleEffect(x: self.layoutDirection == .rightToLeft ? -1 : 1)
+                .navigationTitle("اختر السنة")
+            }
+            .presentationDetents([.medium])
+            .presentationDragIndicator(.visible)
         }
     }
 }
