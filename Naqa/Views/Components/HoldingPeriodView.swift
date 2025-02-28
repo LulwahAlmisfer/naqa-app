@@ -23,25 +23,23 @@ struct HoldingPeriodView: View {
         Section(header: Text("فترة التملك")) {
             
             //TODO: add logic when changing the picker (with temp value)
-            Picker("Selection Mode", selection: $selectionMode) {
+            Picker("", selection: $selectionMode) {
                 ForEach(SelectionMode.allCases, id: \.self) { mode in
-                    Text(mode.rawValue)
+                    Text(LocalizedStringKey(mode.rawValue))
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
             .tint(.purple)
             
             if selectionMode == .dateRange {
-                DatePicker("من", selection: $fromDate, displayedComponents: .date)
-                    .environment(\.locale, Locale(identifier: "ar"))
+                DatePicker(LocalizedStringKey("من"), selection: $fromDate, displayedComponents: .date)
                     .onChange(of: fromDate) { oldValue, newValue in
                         if newValue > toDate {
                             toDate = newValue
                         }
                     }
                 
-                DatePicker("إلى", selection: $toDate, in: fromDate..., displayedComponents: .date)
-                    .environment(\.locale, Locale(identifier: "ar"))
+                DatePicker(LocalizedStringKey("إلى"), selection: $toDate, in: fromDate..., displayedComponents: .date)
             } else {
                 TextField("أدخل عدد الأيام", text: $daysCount)
                     .keyboardType(.numberPad)

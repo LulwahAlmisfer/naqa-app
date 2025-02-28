@@ -27,15 +27,16 @@ struct CalculatorView: View {
                         if let code = model.selectedStock?.code {
                             CompanyLogoView(code: code)
                         }
-                        Text(model.selectedStock?.name ?? "إختر شركة")
+                        Text(LocalizedStringKey(model.selectedStock?.name ?? "إختر الشركة"))
                         Spacer()
                         Image(systemName: "chevron.left")
+                            .rotationEffect(layoutDirection == .leftToRight ? Angle(degrees: 180) : Angle(degrees: 0))
                     }
                 }
                 
                 TextField("عدد الأسهم", text: $model.stocksCount)
                     //.keyboardType(.asciiCapableNumberPad)
-                // todo fix this 
+                // todo fix this
                 
                 picker
                 
@@ -54,12 +55,23 @@ struct CalculatorView: View {
             }
             
             if let result = model.response {
-                Text("مبلغ التطهير: \(result.purificationAmount.description)")
-                Text("نسبة التطهير: \(result.purificationRate.description)")
-                Text("عدد أيام الاحتفاظ: \(result.daysHeld.description)")
+                HStack {
+                    Text("مبلغ التطهير")
+                    Spacer()
+                    Text(result.purificationAmount.description)
+                }
+                HStack {
+                    Text("نسبة التطهير")
+                    Spacer()
+                    Text(result.purificationRate.description)
+                }
+                HStack {
+                    Text("عدد أيام الاحتفاظ")
+                    Spacer()
+                    Text(result.daysHeld.description)
+                }
             }
         }
-        .scaleEffect(x: self.layoutDirection == .rightToLeft ? -1 : 1)
         .toolbar { ToolbarItem(placement: .topBarLeading) { clearButton } }
         .alert(item: $model.error) { error in
             Alert(title: Text("حدث خطأ"), message: Text(error.message), dismissButton: .default(Text("اغلاق")))
@@ -99,7 +111,6 @@ struct CalculatorView: View {
                         .padding(.vertical, 5)
                     }
                 }
-                .scaleEffect(x: self.layoutDirection == .rightToLeft ? -1 : 1)
                 .navigationTitle("اختر السنة")
             }
             .presentationDetents([.medium])
@@ -136,9 +147,10 @@ struct SearchCompaniesView: View {
                 }
             }
         }
-        .scaleEffect(x: self.layoutDirection == .rightToLeft ? -1 : 1)
         .navigationTitle("الشركات")
         .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $model.screen2SearchText,placement:.navigationBarDrawer(displayMode: .always))
+        .searchable(text: $model.screen2SearchText,
+                    placement:.navigationBarDrawer(displayMode: .always)
+                    ,prompt:"إبحث بالاسم أو الرمز")
     }
 }

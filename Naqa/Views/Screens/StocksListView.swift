@@ -36,9 +36,9 @@ struct StocksListView: View {
                         CompanyLogoView(code: stock.code)
                         
                         Text(stock.name)
-                        
-                        Text(stock.code)
-                            .font(.caption)
+                            .minimumScaleFactor(0.5)
+                            .lineLimit(1)
+
                         
                         Spacer()
                         
@@ -47,7 +47,8 @@ struct StocksListView: View {
                                 .font(.caption)
                         }
                         
-                        Text(stock.shariaOpinion.title)
+                        Text(LocalizedStringKey(stock.shariaOpinion.title))
+                            .lineLimit(1)
                             .foregroundStyle(stock.shariaOpinion.color)
                             .padding(8)
                             .background(stock.shariaOpinion.color.opacity(0.2))
@@ -55,9 +56,9 @@ struct StocksListView: View {
                     }
                 }
             }
-            .scaleEffect(x: self.layoutDirection == .rightToLeft ? -1 : 1)
             .navigationTitle("القوائم")
-            .searchable(text: $model.screen1SearchText, placement: .navigationBarDrawer(displayMode: .always)
+            .searchable(text: $model.screen1SearchText,
+                        placement: .navigationBarDrawer(displayMode: .always)
                         ,prompt:"إبحث بالاسم أو الرمز")
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -110,7 +111,6 @@ struct StocksListView: View {
                         .padding(.vertical, 5)
                     }
                 }
-                .scaleEffect(x: self.layoutDirection == .rightToLeft ? -1 : 1)
                 .navigationTitle("اختر السنة")
             }
             .presentationDetents([.medium])
