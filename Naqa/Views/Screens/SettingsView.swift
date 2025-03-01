@@ -23,14 +23,12 @@ struct SettingsView: View {
                     
                     naqaInfo
                     team
-                    changeLanguage
-                    ehsan
                     
                     Text("todo about almaqased")
-                    Text("todo team")
-                    Text("todo ehsan link")
-                    
-                    
+
+                    changeLanguage
+                    ehsan
+                                    
                     
                 }
                 .navigationTitle("عن نقاء")
@@ -83,7 +81,8 @@ struct SettingsView: View {
                       Spacer()
                       
                       Link(destination: URL(string: member.linkedInURL)!) {
-                          Image(systemName: "chevron.right")
+                          Image(systemName: "chevron.left")
+                              .rotationEffect(layoutDirection == .leftToRight ? Angle(degrees: 180) : Angle(degrees: 0))
                       }
                   }
               }
