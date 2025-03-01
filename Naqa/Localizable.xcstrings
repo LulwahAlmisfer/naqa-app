@@ -14,12 +14,42 @@
         }
       }
     },
+    "Naqaa Team" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فريق نقاء"
+          }
+        }
+      }
+    },
     "Settings" : {
+      "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "الإعدادات"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "todo about almaqased" : {
+
+    },
+    "What is Naqa ?" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ماهو نقاء ؟"
           }
         }
       }
@@ -201,6 +231,23 @@
         }
       }
     },
+    "السوق الرئيسي" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "السوق الرئيسي"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Main Market"
+          }
+        }
+      }
+    },
     "الشركات" : {
       "localizations" : {
         "ar" : {
@@ -232,6 +279,9 @@
           }
         }
       }
+    },
+    "تبرع بخدمة إحسان بتطهير الأسهم" : {
+
     },
     "تحديد بالتواريخ" : {
       "extractionState" : "manual",
@@ -311,6 +361,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "stocks count"
+          }
+        }
+      }
+    },
+    "عن نقاء" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عن نقاء"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About Naqa"
           }
         }
       }
@@ -462,6 +528,9 @@
         }
       }
     },
+    "نقاء هو حاسبة تطهير الأسهم تساعد المستثمرين على حساب المبالغ الواجب تطهيرها وفقًا للضوابط الشرعية. يتيح لك التطبيق إدخال بيانات استثمارك بسهولة والحصول على النتائج بسرعة. محتوى مبدئي احتاج مساعده" : {
+
+    },
     "نقية" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -475,6 +544,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pure"
+          }
+        }
+      }
+    },
+    "نمو" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "نمو"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nomu"
           }
         }
       }
