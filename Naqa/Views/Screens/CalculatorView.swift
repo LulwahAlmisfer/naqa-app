@@ -18,8 +18,6 @@ struct CalculatorView: View {
         @Bindable var router = router
 
         Form{
-            AsyncImage(url: URL(string: "https://web.alrajhi-capital.sa/stock-images/2222.webp")!)
-            
             Section("معلومات الشراء") {
                 Button {
                     hideKeyboard()
@@ -46,31 +44,27 @@ struct CalculatorView: View {
           
             HoldingPeriodView(daysCount: $model.daysCount, fromDate: $model.fromDate, toDate: $model.toDate)
             
-            Button("إحسب") {
-                hideKeyboard()
-                Task{ try await model.calculatePurificationForYear() }
-            }
-            .disabled(model.stocksCount.isEmpty)
+            calculate
             
             if model.isLoadingAnswer {
-                ProgressView()
-            }
-            
-            if let result = model.response {
-                HStack {
-                    Text("مبلغ التطهير")
-                    Spacer()
-                    Text(result.purificationAmount.description)
-                }
-                HStack {
-                    Text("نسبة التطهير")
-                    Spacer()
-                    Text(result.purificationRate.description)
-                }
-                HStack {
-                    Text("عدد أيام الاحتفاظ")
-                    Spacer()
-                    Text(result.daysHeld.description)
+                progressView
+            } else if let result = model.response {
+                VStack (spacing: 20){
+                    HStack {
+                        Text("مبلغ التطهير")
+                        Spacer()
+                        Text(result.purificationAmount.rounded(to: 4))
+                        Image("sar")
+                            .resizable()
+                            .renderingMode(.template)
+                            .foregroundStyle(.naqaLightPurple)
+                            .frame(width: 15,height: 15)
+                    }
+                    HStack {
+                        Text("نسبة التطهير")
+                        Spacer()
+                        Text("%\(result.purificationRate.rounded(to: 4))")
+                    }
                 }
             }
         }
@@ -82,6 +76,38 @@ struct CalculatorView: View {
             model.selectedStock = nil
             Task { await model.getStocksForScreen2SelectedYear() }
         }
+
+    }
+    
+    var calculate: some View {
+        Group {
+            if model.response == nil {
+                Button("إحسب") {
+                    hideKeyboard()
+                    Task{ try await model.calculatePurificationForYear() }
+                }
+                .disabled(model.stocksCount.isEmpty)
+                
+            } else {
+                Button {
+                    model.clear()
+                } label: {
+                    HStack {
+                    Spacer()
+                        Image(systemName: "arrow.counterclockwise")
+                            .foregroundStyle(.naqaLightPurple)
+                    }
+                }
+            }
+        }
+    }
+    
+    var progressView: some View {
+        HStack {
+            Spacer()
+            ProgressView()
+            Spacer()
+        }
     }
     
     var picker: some View {
@@ -92,7 +118,7 @@ struct CalculatorView: View {
                   Text(model.screen2SelectedYear)
                       .foregroundColor(.primary)
                 Image(systemName: "chevron.down")
-                    .foregroundColor(.purple)
+                    .foregroundColor(.naqaLightPurple)
             }
             .padding(8)
         }
