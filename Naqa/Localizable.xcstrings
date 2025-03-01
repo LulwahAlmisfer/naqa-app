@@ -15,14 +15,30 @@
       }
     },
     "Settings" : {
+      "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "الإعدادات"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
         }
       }
+    },
+    "todo about almaqased" : {
+
+    },
+    "todo ehsan link" : {
+
+    },
+    "todo team" : {
+
     },
     "أدخل عدد الأيام" : {
       "localizations" : {
@@ -201,6 +217,23 @@
         }
       }
     },
+    "السوق الرئيسي" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "السوق الرئيسي"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Main Market"
+          }
+        }
+      }
+    },
     "الشركات" : {
       "localizations" : {
         "ar" : {
@@ -311,6 +344,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "stocks count"
+          }
+        }
+      }
+    },
+    "عن نقاء" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About Naqa"
           }
         }
       }
@@ -475,6 +518,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pure"
+          }
+        }
+      }
+    },
+    "نمو" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "نمو"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nomu"
           }
         }
       }
