@@ -8,22 +8,24 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @Environment(\.layoutDirection) private var layoutDirection
+    @Environment(\.colorScheme) var colorScheme
+
     var body: some View {
         NavigationView {
             VStack(spacing: 0){
                 
                 icon
                     .frame(maxWidth: .infinity)
-                    .background(Color(uiColor: UIColor.secondarySystemBackground))
+                    .background(Color(uiColor: colorScheme == .light ? UIColor.secondarySystemBackground : UIColor.black))
                 
                 Form {
                     
                     naqaInfo
                     team
+                    changeLanguage
+                    ehsan
                     
-                    Button("Change Language") {
-                        Helper.goToAppSetting()
-                    }
                     Text("todo about almaqased")
                     Text("todo team")
                     Text("todo ehsan link")
@@ -36,6 +38,18 @@ struct SettingsView: View {
         }
     }
     
+    var changeLanguage: some View {
+        Button{
+            Helper.goToAppSetting()
+        }label: {
+            HStack {
+                Text("Change Language")
+                Spacer()
+                Image(systemName: "chevron.left")
+                    .rotationEffect(layoutDirection == .leftToRight ? Angle(degrees: 180) : Angle(degrees: 0))
+            }
+        }
+    }
     var icon: some View {
         HStack {
             Spacer()
@@ -83,6 +97,18 @@ struct SettingsView: View {
         }
         .textCase(nil)
             
+    }
+    
+    var ehsan: some View {
+        Link(destination: URL(string: "https://ehsan.sa/stockspurification")!) {
+            HStack {
+                Text("تبرع بخدمة إحسان بتطهير الأسهم")
+                Spacer()
+                Image("ehsan")
+                    .resizable()
+                    .frame(width: 30,height: 30)
+            }
+        }
     }
 }
 
