@@ -10,6 +10,7 @@ import SwiftUI
 struct StockData: Codable {
     let stocks: [Stock]
 }
+
 struct Stock: Codable,Identifiable {
     let id, name, code, sector: String
     let shariaOpinion: ShariaOpinion
@@ -20,6 +21,15 @@ struct Stock: Codable,Identifiable {
         case name, code, sector
         case shariaOpinion = "sharia_opinion"
         case purification
+    }
+    
+    init(id: String, name: String, code: String, sector: String, shariaOpinion: ShariaOpinion, purification: String?) {
+        self.id = id
+        self.name = name
+        self.code = code
+        self.sector = sector
+        self.shariaOpinion = shariaOpinion
+        self.purification = purification
     }
     
     init(from decoder: Decoder) throws {
@@ -37,6 +47,24 @@ struct Stock: Codable,Identifiable {
         
         
         shariaOpinion = (try? container.decode(ShariaOpinion.self, forKey: .shariaOpinion)) ?? .none
+    }
+    
+    static func dummyData() -> [Stock] {
+        
+        var dummyStocks: [Stock] = []
+        
+        for i in 1...20 {
+            dummyStocks.append(Stock(
+                id: "\(i)",
+                name: "Company \(i)",
+                code: "C\(i)",
+                sector: "Sector \(i % 5 + 1)", // Random sectors for variety
+                shariaOpinion: ShariaOpinion.allCases.randomElement() ?? .none,
+                purification: i % 2 == 0 ? "NaN" : "Valid Purification"
+            ))
+        }
+        
+        return dummyStocks.sorted{$0.shariaOpinion.order < $1.shariaOpinion.order}
     }
     
 }
