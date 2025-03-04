@@ -34,9 +34,8 @@ struct CalculatorView: View {
                     }
                 }
                 
-                TextField("عدد الأسهم", text: $model.stocksCount)
-                    //.keyboardType(.asciiCapableNumberPad)
-                // todo fix this
+                CustomTextField("عدد الأسهم", text: $model.stocksCount)
+                                 .keyboardType(.asciiCapableNumberPad)
                 
                 picker
                 

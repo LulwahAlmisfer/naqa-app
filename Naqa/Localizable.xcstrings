@@ -101,6 +101,7 @@
       }
     },
     "أدخل عدد الأيام" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -463,6 +464,7 @@
       }
     },
     "عدد الأسهم" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
