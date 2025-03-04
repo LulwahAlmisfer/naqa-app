@@ -7,6 +7,16 @@
     "%%%@" : {
 
     },
+    "Backend Developer" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مطور واجهة البرمجة الخلفية"
+          }
+        }
+      }
+    },
     "Change Language" : {
       "localizations" : {
         "ar" : {
@@ -17,11 +27,41 @@
         }
       }
     },
-    "Naqaa Team" : {
+    "iOS Developer" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "مطورة التطبيق"
+          }
+        }
+      }
+    },
+    "Key" : {
+      "extractionState" : "manual"
+    },
+    "NAQA_DEF" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "نقاء هو تطبيق لحساب تطهير الأسهم وفقًا للضوابط الشرعية، حيث يساعد المستثمرين على تحديد المبالغ الواجب تطهيرها بسهولة. يتيح لك التطبيق إدخال بيانات استثمارك والحصول على النتائج بدقة وسلاسة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naqaa is an application for calculating stock purification in accordance with Sharia regulations. It helps investors determine the amounts that need to be purified easily. The application allows you to enter your investment data and obtain results accurately and smoothly."
+          }
+        }
+      }
+    },
+    "Naqaa Team" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "فريق نقاء"
           }
         }
@@ -48,8 +88,14 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "ماهو نقاء ؟"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What is Naqaa ?"
           }
         }
       }
@@ -66,6 +112,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enter days count"
+          }
+        }
+      }
+    },
+    "أروى المطرفي" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arwa Almatrafi"
           }
         }
       }
@@ -200,7 +257,14 @@
       }
     },
     "الاعتماد والإشراف" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accreditation and Supervision"
+          }
+        }
+      }
     },
     "الحاسبة" : {
       "localizations" : {
@@ -284,10 +348,30 @@
       }
     },
     "المشرف العام على موقع المقاصد للاقتصاد الإسلامي" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The General Supervisor of the Almaqased for Islamic Economics website"
+          }
+        }
+      }
     },
     "تبرع بخدمة إحسان لتطهير الأسهم" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تبرع بخدمة إحسان "
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Donate through Ihsan Service"
+          }
+        }
+      }
     },
     "تحديد بالتواريخ" : {
       "extractionState" : "manual",
@@ -339,6 +423,28 @@
         }
       }
     },
+    "حسابات نسب التطهير المعتمدة من قبل الشيخ د. محمد العصيمي" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Purification Ratio Calculations Approved by Sheikh Dr. Mohammed Al-Osaimi"
+          }
+        }
+      }
+    },
+    "عبدالله القحطاني" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abdullah Alqahtani"
+          }
+        }
+      }
+    },
     "عدد أيام الاحتفاظ" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -376,14 +482,14 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "عن نقاء"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "About Naqa"
+            "value" : "About Naqaa"
           }
         }
       }
@@ -422,7 +528,36 @@
       }
     },
     "فضيلة الشيخ الدكتور محمد بن سعود العصيمي" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sheikh Dr. Muhammad bin Saud Al-Osaimi"
+          }
+        }
+      }
+    },
+    "قوائم التحليل المالي للشركات المنشورة للعامة" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Publicly Available Financial Analysis Reports of Companies"
+          }
+        }
+      }
+    },
+    "لولوه المسفر" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lulwah Almisfer"
+          }
+        }
+      }
     },
     "مبلغ التطهير" : {
       "localizations" : {
@@ -491,7 +626,25 @@
       }
     },
     "مصدر البيانات" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data Source"
+          }
+        }
+      }
+    },
+    "مصممة واجهة المستخدم" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UI/UX Designer"
+          }
+        }
+      }
     },
     "معلومات الشراء" : {
       "localizations" : {
@@ -525,6 +678,23 @@
         }
       }
     },
+    "موقع المقاصد" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[موقع المقاصد](https://almaqased.net)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Almaqased website](https://almaqased.net)"
+          }
+        }
+      }
+    },
     "نسبة التطهير" : {
       "localizations" : {
         "ar" : {
@@ -540,9 +710,6 @@
           }
         }
       }
-    },
-    "نقاء هو حاسبة تطهير الأسهم تساعد المستثمرين على حساب المبالغ الواجب تطهيرها وفقًا للضوابط الشرعية. يتيح لك التطبيق إدخال بيانات استثمارك بسهولة والحصول على النتائج بسهولة." : {
-
     },
     "نقية" : {
       "extractionState" : "manual",
@@ -579,7 +746,14 @@
       }
     },
     "هذه الخدمة مبنية على قوائم التطهير المنشورة للعامة من قبل فضيلة الشيخ الدكتور محمد بن سعود العصيمي (المشرف العام على موقع المقاصد). تم جمع وتنظيم البيانات من:" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This service is based on the publicly available purification lists published by Sheikh Dr. Mohammed bin Saud Al-Osaimi (General Supervisor of the Almaqased website). The data has been collected and organized from:"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
