@@ -85,7 +85,7 @@ struct CalculatorView: View {
                     hideKeyboard()
                     Task{ try await model.calculatePurificationForYear() }
                 }
-                .disabled(model.stocksCount.isEmpty)
+                .disabled(model.stocksCount.isEmpty || model.selectedStock == nil)
                 
             } else {
                 Button {
@@ -156,6 +156,7 @@ struct SearchCompaniesView: View {
     @EnvironmentObject private var model: Model
     @Environment(\.dismiss) private var dismiss
     @Environment(\.layoutDirection) private var layoutDirection
+    @Environment(\.colorScheme) var colorScheme
 
     
     var body: some View {
@@ -171,6 +172,7 @@ struct SearchCompaniesView: View {
                         .frame(width: 30,height: 30)
                         .clipShape(.circle)
                     Text(stock.name)
+                        .foregroundStyle(colorScheme == .dark ? .white : .black)
                 }
             }
         }
