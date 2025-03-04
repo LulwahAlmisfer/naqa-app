@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PostHog
 
 struct CalculatorView: View {
     @EnvironmentObject private var model: Model
@@ -67,6 +68,7 @@ struct CalculatorView: View {
                 }
             }
         }
+        .logEvent("CalculatorView_Opened")
         .toolbar { ToolbarItem(placement: .topBarLeading) { clearButton } }
         .alert(item: $model.error) { error in
             Alert(title: Text("حدث خطأ"), message: Text(error.message), dismissButton: .default(Text("اغلاق")))
@@ -82,6 +84,7 @@ struct CalculatorView: View {
         Group {
             if model.response == nil {
                 Button("إحسب") {
+                    PostHogSDK.shared.capture("Calculate_Button_Tapped")
                     hideKeyboard()
                     Task{ try await model.calculatePurificationForYear() }
                 }

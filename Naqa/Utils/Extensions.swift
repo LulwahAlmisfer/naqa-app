@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PostHog
 
 extension String {
 
@@ -57,5 +58,29 @@ extension Double {
         formatter.maximumFractionDigits = places
         formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter.string(from: NSNumber(value: self)) ?? "\(self)"
+    }
+}
+
+extension View {
+    func logEvent(_ event: String) -> some View {
+        self.onAppear {
+            PostHogSDK.shared.capture(event)
+        }
+    }
+}
+
+func identifyUser() {
+    let userDefaults = UserDefaults.standard
+    let userIdKey = "posthog_user_id"
+
+    if let storedUserId = userDefaults.string(forKey: userIdKey) {
+        print("🔍 Using existing User ID: \(storedUserId)")
+        PostHogSDK.shared.identify(storedUserId)
+    } else {
+
+        let newUserId = UUID().uuidString
+        userDefaults.set(newUserId, forKey: userIdKey)
+        print("🆕 Generated new User ID: \(newUserId)")
+        PostHogSDK.shared.identify(newUserId)
     }
 }

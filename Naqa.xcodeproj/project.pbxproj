@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		2F4FC4822D77BEA700A122C7 /* PostHog in Frameworks */ = {isa = PBXBuildFile; productRef = 2F4FC4812D77BEA700A122C7 /* PostHog */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		2F1CAA2D2D64878E007D1FEB /* Naqa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Naqa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F4FC4822D77BEA700A122C7 /* PostHog in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = Naqa;
 			packageProductDependencies = (
+				2F4FC4812D77BEA700A122C7 /* PostHog */,
 			);
 			productName = Naqa;
 			productReference = 2F1CAA2D2D64878E007D1FEB /* Naqa.app */;
@@ -108,6 +114,9 @@
 			);
 			mainGroup = 2F1CAA242D64878E007D1FEB;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				2F4FC4802D77BEA700A122C7 /* XCRemoteSwiftPackageReference "posthog-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2F1CAA2E2D64878E007D1FEB /* Products */;
 			projectDirPath = "";
@@ -354,6 +363,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2F4FC4802D77BEA700A122C7 /* XCRemoteSwiftPackageReference "posthog-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/PostHog/posthog-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.20.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2F4FC4812D77BEA700A122C7 /* PostHog */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2F4FC4802D77BEA700A122C7 /* XCRemoteSwiftPackageReference "posthog-ios" */;
+			productName = PostHog;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2F1CAA252D64878E007D1FEB /* Project object */;
 }
