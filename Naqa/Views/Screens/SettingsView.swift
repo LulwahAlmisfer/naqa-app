@@ -67,26 +67,47 @@ struct SettingsView: View {
         
         
     }
-    
-    
-    
-    var changeLanguage: some View {
-        Button{
-            Helper.goToAppSetting()
-        }label: {
+    var ehsan: some View {
+        Link(destination: URL(string: "https://ehsan.sa/stockspurification")!) {
             HStack {
-                Image(systemName: "globe")
-                    .frame(width: 35,height: 35)
-                    .foregroundStyle(.naqaLightPurple)
+                Image("ehsan")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20) // Match the size
+                    .background(.white)
+                    .clipShape(.circle)
                 
-                Text("Change Language")
+                Text("تبرع بخدمة إحسان لتطهير الأسهم")
                     .foregroundStyle(colorScheme == .dark ? .white : .black)
-                Spacer()
+                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                
                 Image(systemName: "chevron.left")
                     .rotationEffect(layoutDirection == .leftToRight ? Angle(degrees: 180) : Angle(degrees: 0))
             }
         }
     }
+
+    var changeLanguage: some View {
+        Button {
+            Helper.goToAppSetting()
+        } label: {
+            HStack {
+                Image(systemName: "globe")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20) // Ensuring consistency
+                    .foregroundStyle(.naqaLightPurple)
+                
+                Text("Change Language")
+                    .foregroundStyle(colorScheme == .dark ? .white : .black)
+                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                
+                Image(systemName: "chevron.left")
+                    .rotationEffect(layoutDirection == .leftToRight ? Angle(degrees: 180) : Angle(degrees: 0))
+            }
+        }
+    }
+
     
     var icon: some View {
         HStack {
@@ -148,23 +169,6 @@ struct SettingsView: View {
         }
         .textCase(nil)
         
-    }
-    
-    var ehsan: some View {
-        Link(destination: URL(string: "https://ehsan.sa/stockspurification")!) {
-            HStack {
-                Image("ehsan")
-                    .resizable()
-                    .renderingMode(.template)
-                    .foregroundStyle(.naqaLightPurple)
-                    .frame(width: 35,height: 35)
-                Text("تبرع بخدمة إحسان لتطهير الأسهم")
-                    .foregroundStyle(colorScheme == .dark ? .white : .black)
-                Spacer()
-                Image(systemName: "chevron.left")
-                    .rotationEffect(layoutDirection == .leftToRight ? Angle(degrees: 180) : Angle(degrees: 0))
-            }
-        }
     }
     
     var dataSource: some View {

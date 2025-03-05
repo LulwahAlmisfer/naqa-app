@@ -84,3 +84,14 @@ func identifyUser() {
         PostHogSDK.shared.identify(newUserId)
     }
 }
+
+extension Array where Element == Stock {
+    func sortedBySharia() -> [Stock] {
+        self.sorted {
+            if $0.shariaOpinion.order == $1.shariaOpinion.order {
+                return $0.code < $1.code // Secondary sorting by stock.code
+            }
+            return $0.shariaOpinion.order < $1.shariaOpinion.order // Primary sorting by shariaOpinion.order
+        }
+    }
+}
