@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		2F4FC4822D77BEA700A122C7 /* PostHog in Frameworks */ = {isa = PBXBuildFile; productRef = 2F4FC4812D77BEA700A122C7 /* PostHog */; };
+		2FEAB7F02D7CE97200CEDD64 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 2FEAB7EF2D7CE97200CEDD64 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2F1CAA2D2D64878E007D1FEB /* Naqa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Naqa.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FEAB7EF2D7CE97200CEDD64 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -50,6 +52,7 @@
 		2F1CAA242D64878E007D1FEB = {
 			isa = PBXGroup;
 			children = (
+				2FEAB7EF2D7CE97200CEDD64 /* PrivacyInfo.xcprivacy */,
 				2F1CAA2F2D64878E007D1FEB /* Naqa */,
 				2F1CAA2E2D64878E007D1FEB /* Products */,
 			);
@@ -132,6 +135,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FEAB7F02D7CE97200CEDD64 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
