@@ -11,7 +11,6 @@ struct StocksListView: View {
     @EnvironmentObject private var model: Model
     @State private var selectedMarket: Market = .main
     @Environment(\.layoutDirection) private var layoutDirection
-    @State private var showSheet = false
 
     enum Market: String, CaseIterable {
         case main = "السوق الرئيسي"
