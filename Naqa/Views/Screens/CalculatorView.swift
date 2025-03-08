@@ -171,6 +171,8 @@ struct CalculatorView: View {
                 Image(systemName: "chevron.left")
                     .rotationEffect(layoutDirection == .leftToRight ? Angle(degrees: 180) : Angle(degrees: 0))
             }
+        }.onTapGesture {
+            PostHogSDK.shared.capture("CLICKED_DONATE_EHSAN")
         }
     }
     

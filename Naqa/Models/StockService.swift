@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PostHog
 
 enum StockServiceError: Error {
     case badURL
@@ -31,8 +32,10 @@ class StockService {
 
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
             if let apiError = try? JSONDecoder().decode(NaqaErrorResponse.self, from: data) {
+                PostHogSDK.shared.capture("Error(getAvailableYears):" + apiError.message)
                 throw StockServiceError.apiError(apiError)
             } else {
+                PostHogSDK.shared.capture("Error(getAvailableYears): Unknown Error")
                 throw StockServiceError.unknownError("Invalid error response format")
             }
         }
@@ -54,8 +57,10 @@ class StockService {
 
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
             if let apiError = try? JSONDecoder().decode(NaqaErrorResponse.self, from: data) {
+                PostHogSDK.shared.capture("Error(getStocksByYear):" + apiError.message)
                 throw StockServiceError.apiError(apiError)
             } else {
+                PostHogSDK.shared.capture("Error(getStocksByYear): Unknown Error")
                 throw StockServiceError.unknownError("Invalid error response format")
             }
         }
@@ -86,8 +91,10 @@ class StockService {
             
             if !(200...299).contains(httpResponse.statusCode) {
                 if let apiError = try? JSONDecoder().decode(NaqaErrorResponse.self, from: data) {
+                    PostHogSDK.shared.capture("Error(calculatePurification):" + apiError.message)
                     throw StockServiceError.apiError(apiError)
                 } else {
+                    PostHogSDK.shared.capture("Error(calculatePurification): Unknown Error")
                     throw StockServiceError.unknownError("Invalid error response format")
                 }
             }
@@ -96,6 +103,7 @@ class StockService {
         do {
             return try JSONDecoder().decode(CalculatePurificationResponse.self, from: data)
         } catch {
+            PostHogSDK.shared.capture("Error(calculatePurification): decodingError Error")
             throw StockServiceError.decodingError
         }
         
