@@ -115,45 +115,33 @@ struct CalculatorView: View {
     }
     
     var picker: some View {
-        Button(action: { showSheet.toggle() }) {
+        Menu {
+            ForEach(model.years.reversed(), id: \.self) { year in
+                Button(action: { model.screen2SelectedYear = year }) {
+                    HStack {
+                        Text(year)
+                        if model.screen2SelectedYear == year {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                }
+            }
+        }
+        label: {
             HStack {
-                Text("إختر السنة")
-                Spacer()
-                  Text(model.screen2SelectedYear)
-                      .foregroundColor(.primary)
-                Image(systemName: "chevron.down")
+                Text(model.screen2SelectedYear)
+                    .foregroundColor(.primary)
+                Image(systemName: "chevron.up.chevron.down")
                     .foregroundColor(.naqaLightPurple)
             }
             .padding(8)
         }
-        .sheet(isPresented: $showSheet) {
-            NavigationView {
-                List(model.years.reversed(), id: \.self) { year in
-                    Button(action: {
-                        model.screen2SelectedYear = year
-                        showSheet = false
-                    }) {
-                        HStack {
-                            Text(year)
-                            Spacer()
-                            if model.screen2SelectedYear == year {
-                                Image(systemName: "checkmark")
-                            }
-                        }
-                        .padding(.vertical, 5)
-                    }
-                }
-                .navigationTitle("اختر السنة")
-            }
-            .presentationDetents([.medium])
-            .presentationDragIndicator(.visible)
-        }
     }
+
     var clearButton: some View {
-        Button("مسح"){
-            model.clear()
-        }
+        Button("مسح"){ model.clear() }
     }
+    
     var ehsan: some View {
         Link(destination: URL(string: "https://ehsan.sa/stockspurification")!) {
             HStack {
