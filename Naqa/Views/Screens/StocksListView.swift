@@ -41,7 +41,7 @@ struct StocksListView: View {
                                 .frame(width: 30, height: 30)
                         }
                         
-                        Text(stock.name)
+                        Text(Helper.isCurrentLanguageArabic() ? stock.name_ar : stock.name_en)
                             .minimumScaleFactor(0.5)
                             .lineLimit(1)
 

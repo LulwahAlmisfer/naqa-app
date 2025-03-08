@@ -12,30 +12,22 @@ struct StockData: Codable {
 }
 
 struct Stock: Codable,Identifiable {
-    let id, name, code, sector: String
+    let id, name_ar, name_en, code, sector: String
     let shariaOpinion: ShariaOpinion
     let purification: String?
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
-        case name, code, sector
+        case name_ar, name_en , code, sector
         case shariaOpinion = "sharia_opinion"
         case purification
-    }
-    
-    init(id: String, name: String, code: String, sector: String, shariaOpinion: ShariaOpinion, purification: String?) {
-        self.id = id
-        self.name = name
-        self.code = code
-        self.sector = sector
-        self.shariaOpinion = shariaOpinion
-        self.purification = purification
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
-        name = try container.decode(String.self, forKey: .name)
+        name_ar = try container.decode(String.self, forKey: .name_ar)
+        name_en = try container.decode(String.self, forKey: .name_en)
         code = try container.decode(String.self, forKey: .code)
         sector = try container.decode(String.self, forKey: .sector)
         
@@ -45,26 +37,7 @@ struct Stock: Codable,Identifiable {
             self.purification = nil
         }
         
-        
         shariaOpinion = (try? container.decode(ShariaOpinion.self, forKey: .shariaOpinion)) ?? .none
-    }
-    
-    static func dummyData() -> [Stock] {
-        
-        var dummyStocks: [Stock] = []
-        
-        for i in 1...20 {
-            dummyStocks.append(Stock(
-                id: "\(i)",
-                name: "Company \(i)",
-                code: "C\(i)",
-                sector: "Sector \(i % 5 + 1)", // Random sectors for variety
-                shariaOpinion: ShariaOpinion.allCases.randomElement() ?? .none,
-                purification: i % 2 == 0 ? "NaN" : "Valid Purification"
-            ))
-        }
-        
-        return dummyStocks.sorted{$0.shariaOpinion.order < $1.shariaOpinion.order}
     }
     
 }

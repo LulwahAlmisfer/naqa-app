@@ -28,7 +28,7 @@ struct CalculatorView: View {
                         if let code = model.selectedStock?.code {
                             AsyncCompanyLogoView(ticker: code)
                         }
-                        Text(LocalizedStringKey(model.selectedStock?.name ?? "إختر الشركة"))
+                        Text(LocalizedStringKey((Helper.isCurrentLanguageArabic() ? model.selectedStock?.name_ar : model.selectedStock?.name_en) ?? "إختر الشركة"))
                             .foregroundStyle(colorScheme == .dark ? .white : .black)
                         Spacer()
                         Image(systemName: "chevron.left")
@@ -185,8 +185,7 @@ struct SearchCompaniesView: View {
                         .resizable()
                         .frame(width: 30,height: 30)
                         .clipShape(.circle)
-                    Text(stock.name)
-                        .foregroundStyle(colorScheme == .dark ? .white : .black)
+                    Text(Helper.isCurrentLanguageArabic() ? stock.name_ar : stock.name_en)                        .foregroundStyle(colorScheme == .dark ? .white : .black)
                 }
             }
         }

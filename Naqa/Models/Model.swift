@@ -31,14 +31,17 @@ class Model: ObservableObject {
         if screen1SearchText.isEmpty {
             return screen1Stocks
         }
-        return screen1Stocks.filter { $0.name.localizedCaseInsensitiveContains(screen1SearchText) || $0.code.localizedCaseInsensitiveContains(screen1SearchText) }
+        return screen1Stocks.filter { $0.name_ar.localizedCaseInsensitiveContains(screen1SearchText) || $0.name_en.localizedCaseInsensitiveContains(screen1SearchText) ||
+            $0.code.localizedCaseInsensitiveContains(screen1SearchText) }
     }
 
     var screen2FilteredStocks: [Stock] {
         if screen2SearchText.isEmpty {
             return screen2Stocks
         }
-        return screen2Stocks.filter { $0.name.localizedCaseInsensitiveContains(screen2SearchText) || $0.code.localizedCaseInsensitiveContains(screen2SearchText) }
+        return screen2Stocks.filter { $0.name_ar.localizedCaseInsensitiveContains(screen2SearchText) ||
+            $0.name_en.localizedCaseInsensitiveContains(screen2SearchText) ||
+            $0.code.localizedCaseInsensitiveContains(screen2SearchText) }
     }
     
     
