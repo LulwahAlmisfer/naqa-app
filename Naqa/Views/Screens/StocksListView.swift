@@ -49,7 +49,7 @@ struct StocksListView: View {
                         
                         Spacer()
                         
-                        if let purification = stock.purification {
+                        if let purification = stock.purification, !purification.isEmpty {
                             Text("%\(purification)")
                                 .font(.callout)
                         }

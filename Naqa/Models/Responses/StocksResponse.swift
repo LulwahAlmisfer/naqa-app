@@ -35,7 +35,12 @@ struct Stock: Codable,Identifiable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
+<<<<<<< Updated upstream
         name = try container.decode(String.self, forKey: .name)
+=======
+        name_ar = try container.decode(String.self, forKey: .name_ar)
+        name_en = try container.decode(String.self, forKey: .name_en).removingCo()
+>>>>>>> Stashed changes
         code = try container.decode(String.self, forKey: .code)
         sector = try container.decode(String.self, forKey: .sector)
         
