@@ -27,7 +27,7 @@ struct Stock: Codable,Identifiable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
         name_ar = try container.decode(String.self, forKey: .name_ar)
-        name_en = try container.decode(String.self, forKey: .name_en)
+        name_en = try container.decode(String.self, forKey: .name_en).removingCo()
         code = try container.decode(String.self, forKey: .code)
         sector = try container.decode(String.self, forKey: .sector)
         
