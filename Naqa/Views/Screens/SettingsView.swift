@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PostHog
 
 struct SettingsView: View {
     @Environment(\.layoutDirection) private var layoutDirection
@@ -36,7 +37,9 @@ struct SettingsView: View {
                     dataSource
                     supervision
                     changeLanguage
-                    ehsan
+                    if PostHogSDK.shared.isFeatureEnabled("EHSAN") {
+                        ehsan
+                    }
                 }
                 .onChange(of: geometry.frame(in: .global).minY) { oldValue, newValue in
                     if newValue < 110 {
