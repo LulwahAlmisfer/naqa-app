@@ -13,6 +13,7 @@ struct SettingsView: View {
     @State private var showIconInToolbar = false
     @State private var showIcon = true
     
+    @State private var showSheet = false
 
     
     var body: some View {
@@ -68,7 +69,9 @@ struct SettingsView: View {
         
     }
     var ehsan: some View {
-        Link(destination: URL(string: "https://ehsan.sa/stockspurification")!) {
+        Button(action: {
+            showSheet.toggle()
+        }) {
             HStack {
                 Image("ehsan")
                     .resizable()
@@ -85,7 +88,12 @@ struct SettingsView: View {
                     .rotationEffect(layoutDirection == .leftToRight ? Angle(degrees: 180) : Angle(degrees: 0))
             }
         }
+        .foregroundStyle(.naqaLightPurple)
+        .sheet(isPresented: $showSheet) {
+            WebViewWithBackButton(url: URL(string: "https://ehsan.sa/stockspurification")!)
+        }
     }
+    
 
     var changeLanguage: some View {
         Button {

@@ -14,7 +14,8 @@ struct CalculatorView: View {
     @Environment(\.colorScheme) var colorScheme
 
     @Environment(\.layoutDirection) private var layoutDirection
-    
+    @State private var showSheet = false
+
     var body: some View {
         @Bindable var router = router
 
@@ -143,7 +144,9 @@ struct CalculatorView: View {
     }
     
     var ehsan: some View {
-        Link(destination: URL(string: "https://ehsan.sa/stockspurification")!) {
+        Button(action: {
+            showSheet.toggle()
+        }) {
             HStack {
                 Image("ehsan")
                     .resizable()
@@ -159,11 +162,12 @@ struct CalculatorView: View {
                 Image(systemName: "chevron.left")
                     .rotationEffect(layoutDirection == .leftToRight ? Angle(degrees: 180) : Angle(degrees: 0))
             }
-        }.onTapGesture {
-            PostHogSDK.shared.capture("CLICKED_DONATE_EHSAN")
+        }
+        .foregroundStyle(.naqaLightPurple)
+        .sheet(isPresented: $showSheet) {
+            WebViewWithBackButton(url: URL(string: "https://ehsan.sa/stockspurification")!)
         }
     }
-    
 }
 
 struct SearchCompaniesView: View {
