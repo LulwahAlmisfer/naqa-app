@@ -35,7 +35,8 @@ struct SettingsView: View {
                     team
                     
                     dataSource
-                    supervision
+                    rate
+//                    supervision
                     changeLanguage
                     if PostHogSDK.shared.isFeatureEnabled("EHSAN") {
                         ehsan
@@ -71,6 +72,27 @@ struct SettingsView: View {
         
         
     }
+    
+    var rate: some View {
+        
+        Link(destination:  URL(string: "https://apps.apple.com/app/id6742379470?action=write-review")!) {
+            HStack {
+                Image(systemName: "star.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
+                    .foregroundStyle(.naqaLightPurple)
+                
+                Text("rating")
+                    .foregroundStyle(colorScheme == .dark ? .white : .black)
+                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                
+                Image(systemName: "chevron.left")
+                    .rotationEffect(layoutDirection == .leftToRight ? Angle(degrees: 180) : Angle(degrees: 0))
+            }
+        }
+    }
+    
     var ehsan: some View {
         Button(action: {
             showSheet.toggle()
