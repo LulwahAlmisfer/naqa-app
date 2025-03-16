@@ -44,19 +44,22 @@ struct StocksListView: View {
                         Text(Helper.isCurrentLanguageArabic() ? stock.name_ar : stock.name_en)
                             .minimumScaleFactor(0.5)
                             .lineLimit(1)
+                            .font(.system(size: Helper.isCurrentLanguageArabic() ? 17 : 10))
+                        
 
                         
                         Spacer()
                         
                         if let purification = stock.purification, !purification.isEmpty {
                             Text("%\(purification)")
-                                .font(.callout)
+                                .font(.caption)
                         }
                         
                         Text(LocalizedStringKey(stock.shariaOpinion.title))
                             .lineLimit(1)
+                            .font(.system(size: Helper.isCurrentLanguageArabic() ? 18 : 13))
                             .foregroundStyle(stock.shariaOpinion.color)
-                            .padding(8)
+                            .padding(6)
                             .background(stock.shariaOpinion.color.opacity(0.2))
                             .clipShape(.capsule)
                     }

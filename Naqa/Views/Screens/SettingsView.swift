@@ -14,8 +14,6 @@ struct SettingsView: View {
     @State private var showIconInToolbar = false
     @State private var showIcon = true
     
-    @State private var showSheet = false
-
     
     var body: some View {
         NavigationView {
@@ -35,12 +33,13 @@ struct SettingsView: View {
                     team
                     
                     dataSource
-                    rate
-//                    supervision
-                    changeLanguage
                     if PostHogSDK.shared.isFeatureEnabled("EHSAN") {
                         ehsan
                     }
+                    rate
+//                    supervision
+                    changeLanguage
+                  
                 }
                 .onChange(of: geometry.frame(in: .global).minY) { oldValue, newValue in
                     if newValue < 110 {
@@ -94,28 +93,24 @@ struct SettingsView: View {
     }
     
     var ehsan: some View {
-        Button(action: {
-            showSheet.toggle()
-        }) {
+        Link(destination: URL(string: "https://ehsan.sa/stockspurification")!) {
             HStack {
                 Image("ehsan")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 20, height: 20) // Match the size
+                    .frame(width: 20, height: 20)
                     .background(.white)
                     .clipShape(.circle)
-                
+
                 Text("تبرع بخدمة إحسان لتطهير الأسهم")
                     .foregroundStyle(colorScheme == .dark ? .white : .black)
                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                
+
                 Image(systemName: "chevron.left")
                     .rotationEffect(layoutDirection == .leftToRight ? Angle(degrees: 180) : Angle(degrees: 0))
             }
-        }
-        .foregroundStyle(.naqaLightPurple)
-        .sheet(isPresented: $showSheet) {
-            WebViewWithBackButton(url: URL(string: "https://ehsan.sa/stockspurification")!)
+        }.onTapGesture {
+            PostHogSDK.shared.capture("CLICKED_DONATE_EHSAN")
         }
     }
     
