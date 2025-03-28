@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct MainView: View {
-    @State private var selection: AppScreen? = .calculator
+    @State private var selectedScreen: AppScreen? = .stocks
     
     var body: some View {
-        AppTabView(selection: $selection)
+        AppTabView(selection: $selectedScreen)
+            .environment(Router())
     }
     
 }
