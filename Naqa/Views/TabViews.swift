@@ -34,15 +34,15 @@ extension AppScreen {
         case .calculator:
             CalculatorNavigationStack()
         case .stocks:
-            Text("القوائم")
+            StocksListView()
         }
     }
     
 }
 
 struct AppTabView: View {
-    
-    @Binding var selection: AppScreen? 
+    @EnvironmentObject private var model: Model
+    @Binding var selection: AppScreen?
     
     var body: some View {
         TabView(selection: $selection) {
@@ -85,5 +85,7 @@ struct CalculatorNavigationStack: View {
                 }
             }
         }
+        .navigationTitle("القوائم")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

@@ -9,10 +9,12 @@ import SwiftUI
 
 struct MainView: View {
     @State private var selectedScreen: AppScreen? = .stocks
-    
+    private var service = StockService()
+
     var body: some View {
         AppTabView(selection: $selectedScreen)
             .environment(Router())
+            .environmentObject(Model(stockService: service))
     }
     
 }
