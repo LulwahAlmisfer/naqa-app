@@ -16,16 +16,20 @@ class Model: ObservableObject {
     @Published var selectedYear: String?
     @Published var years: [String] = []
     @Published var stocks: [Stock] = []
+    
     @Published var response: CalculatePurificationResponse? = nil
+    @Published var selectedStock: Stock?
+    @Published var stocksCount: String = ""
+    @Published var startDate: Date = .now
+    @Published var endDate: Date = .now
+    
+    @Published var isLoading: Bool = false
     
     let stockService: StockService
     
     init(stockService: StockService) {
         self.stockService = stockService
         Task{ await fetchOnAppear() }
-        Task{
-          try await calculatePurificationForYear(startDate: Date.now, endDate: Date.now.addingTimeInterval(-86400), count: 20, code: "2222")
-        }
     }
     
     func fetchOnAppear() async {
@@ -52,11 +56,18 @@ class Model: ObservableObject {
         self.stocks = try await stockService.getStocksByYear(year: selectedYear)
     }
     
-    func calculatePurificationForYear(startDate:Date, endDate:Date ,count:Int, code:String) async throws {
+    func calculatePurificationForYear() async throws {
         let year = Calendar.current.dateComponents([.year], from: startDate).year
+        guard let code = selectedStock?.code, let stocksCountInt = Int(stocksCount) else {
+            return
+        }
+        
         do {
-            self.response = try await stockService.calculatePurification(year: year!.description, request: .init(startDate: startDate, endDate: endDate, numberOfStocks: count, stockCode: code))
+            isLoading = true
+            self.response = try await stockService.calculatePurification(year: year!.description, request: .init(startDate: startDate, endDate: endDate, numberOfStocks: stocksCountInt, stockCode: code))
+            isLoading = false
         } catch {
+            isLoading = false
             print("Error: \(error)")
         }
 

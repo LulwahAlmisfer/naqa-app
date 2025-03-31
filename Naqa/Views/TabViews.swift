@@ -61,12 +61,10 @@ class Router {
 }
 
 enum CalculatorRoute: Hashable {
-    case main
     case search
 }
 
 struct CalculatorNavigationStack: View {
-    
     @Environment(Router.self) private var router
     
     var body: some View {
@@ -74,18 +72,15 @@ struct CalculatorNavigationStack: View {
         @Bindable var router = router
         
         NavigationStack(path: $router.calculatorRoutes) {
-            Button("ابحث") {
-                router.calculatorRoutes.append(.search)
-            }.navigationDestination(for: CalculatorRoute.self) { route in
-                switch route {
-                case .main:
-                    Text("الحاسبة")
-                case .search:
-                    Text("بحث")
+            CalculatorView()
+                .navigationDestination(for: CalculatorRoute.self) { route in
+                    switch route {
+                    case .search:
+                        SearchCompaniesView()
+                    }
                 }
-            }
+                .navigationTitle("الحاسبة")
+                .navigationBarTitleDisplayMode(.inline)
         }
-        .navigationTitle("القوائم")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
