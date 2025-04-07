@@ -23,8 +23,9 @@ class Model: ObservableObject {
     @Published var startDate: Date = .now
     @Published var endDate: Date = .now
     
-    @Published var isLoading: Bool = false
-    
+    @Published var isLoadingAnswer: Bool = false
+    @Published var error: NaqaErrorResponse?
+
     let stockService: StockService
     
     init(stockService: StockService) {
@@ -33,27 +34,32 @@ class Model: ObservableObject {
     }
     
     func fetchOnAppear() async {
+        await getAvailableYears()
+        await getStocksForSelectedYear()
+    }
+    
+    func getAvailableYears() async {
         do {
-            try await getAvailableYears()
-            try await getStocksForSelectedYear()
+            self.years = try await stockService.getAvailableYears()
+            selectedYear = years.last
         } catch {
-            print("Error: \(error)")
+            print(error)
         }
     }
     
-    func getAvailableYears() async throws {
-        self.years = try await stockService.getAvailableYears()
-        selectedYear = years.last
-    }
-    
-    func getStocksForSelectedYear() async throws {
+    func getStocksForSelectedYear() async {
         // TODO: cache layer
         
         guard let selectedYear = self.selectedYear else {
             return
         }
-        
-        self.stocks = try await stockService.getStocksByYear(year: selectedYear)
+        do {
+            self.stocks = try await stockService.getStocksByYear(year: selectedYear)
+        } catch let error as StockServiceError {
+            handleStockServiceError(error)
+        } catch {
+            print("Unexpected error: \(error.localizedDescription)")
+        }
     }
     
     func calculatePurificationForYear() async throws {
@@ -63,14 +69,31 @@ class Model: ObservableObject {
         }
         
         do {
-            isLoading = true
+            isLoadingAnswer = true
             self.response = try await stockService.calculatePurification(year: year!.description, request: .init(startDate: startDate, endDate: endDate, numberOfStocks: stocksCountInt, stockCode: code))
-            isLoading = false
+            isLoadingAnswer = false
+        } catch let error as StockServiceError {
+            isLoadingAnswer = false
+            handleStockServiceError(error)
         } catch {
-            isLoading = false
-            print("Error: \(error)")
+            isLoadingAnswer = false
+            print("Unexpected error: \(error.localizedDescription)")
         }
-
     }
+    
+    func handleStockServiceError(_ error: StockServiceError) {
+        switch error {
+        case .badURL:
+            print("❌ Invalid URL. Please check the API endpoint.")
+        case .decodingError:
+            print("❌ Failed to decode data. The API response format might have changed.")
+        case .apiError(let apiError):
+            self.error = apiError
+            print("❌ API Error: \(apiError.message)")
+        case .unknownError(let message):
+            print("❌ Unknown error: \(message)")
+        }
+    }
+
     
 }
