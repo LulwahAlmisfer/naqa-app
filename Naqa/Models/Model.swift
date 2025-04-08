@@ -13,9 +13,31 @@ enum OrderError: Error {
 
 @MainActor
 class Model: ObservableObject {
-    @Published var selectedYear: String?
+    @Published var screen1SelectedYear: String = "2015"
+    @Published var screen2SelectedYear: String = "2015"
     @Published var years: [String] = []
-    @Published var stocks: [Stock] = []
+    
+    
+    @Published var screen1Stocks: [Stock] = []
+    @Published var screen2Stocks: [Stock] = []
+    
+    @Published var screen1SearchText: String = ""
+    @Published var screen2SearchText: String = ""
+
+    var screen1FilteredStocks: [Stock] {
+        if screen1SearchText.isEmpty {
+            return screen1Stocks
+        }
+        return screen1Stocks.filter { $0.name.localizedCaseInsensitiveContains(screen1SearchText) }
+    }
+
+    var screen2FilteredStocks: [Stock] {
+        if screen2SearchText.isEmpty {
+            return screen2Stocks
+        }
+        return screen2Stocks.filter { $0.name.localizedCaseInsensitiveContains(screen2SearchText) }
+    }
+    
     
     @Published var response: CalculatePurificationResponse? = nil
     @Published var selectedStock: Stock?
@@ -35,32 +57,48 @@ class Model: ObservableObject {
     
     func fetchOnAppear() async {
         await getAvailableYears()
-        await getStocksForSelectedYear()
+        await getStocksForScreen1SelectedYear()
+        await getStocksForScreen2SelectedYear()
     }
     
     func getAvailableYears() async {
         do {
             self.years = try await stockService.getAvailableYears()
-            selectedYear = years.last
+            if let lastYear = years.last {
+                self.screen1SelectedYear = lastYear
+                self.screen2SelectedYear = lastYear
+            }
         } catch {
             print(error)
         }
     }
     
-    func getStocksForSelectedYear() async {
+    func getStocksForScreen1SelectedYear() async {
         // TODO: cache layer
-        
-        guard let selectedYear = self.selectedYear else {
-            return
-        }
+
         do {
-            self.stocks = try await stockService.getStocksByYear(year: selectedYear)
+            let stocks = try await stockService.getStocksByYear(year: screen1SelectedYear)
+            self.screen1Stocks = stocks.sorted{$0.shariaOpinion.order < $1.shariaOpinion.order}
         } catch let error as StockServiceError {
             handleStockServiceError(error)
         } catch {
             print("Unexpected error: \(error.localizedDescription)")
         }
     }
+    
+    func getStocksForScreen2SelectedYear() async {
+        // TODO: cache layer
+
+        do {
+            let stocks = try await stockService.getStocksByYear(year: screen2SelectedYear)
+            self.screen2Stocks = stocks.sorted{$0.shariaOpinion.order < $1.shariaOpinion.order}
+        } catch let error as StockServiceError {
+            handleStockServiceError(error)
+        } catch {
+            print("Unexpected error: \(error.localizedDescription)")
+        }
+    }
+    
     
     func calculatePurificationForYear() async throws {
         let year = Calendar.current.dateComponents([.year], from: startDate).year

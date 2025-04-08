@@ -17,3 +17,4 @@ build/
 *.dSYM/
 *.xcarchive/
 Breakpoints_v2.xcbkptlist
+/Naqa.xcodeproj/xcuserdata/con-lalmasfer.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
