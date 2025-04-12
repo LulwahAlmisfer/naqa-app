@@ -17,7 +17,7 @@ struct CalculatorView: View {
     var body: some View {
         @Bindable var router = router
 
-        VStack{
+        Form{
             
             Button {
                 router.calculatorRoutes.append(.search)
@@ -29,15 +29,12 @@ struct CalculatorView: View {
             
             TextField("عدد الأسهم", text: $model.stocksCount)
          
-            DatePicker("start date", selection: $model.startDate,displayedComponents: [.date])
-                .datePickerStyle(.compact)
-            DatePicker("end date", selection: $model.endDate,displayedComponents: [.date])
-                .datePickerStyle(.compact)
-
+            HoldingPeriodView()
             
             Button("calculate") {
                 Task{ try await model.calculatePurificationForYear() }
             }
+            .disabled(model.stocksCount.isEmpty)
             
             if model.isLoadingAnswer {
                 ProgressView()
@@ -49,9 +46,8 @@ struct CalculatorView: View {
                 Text(result.daysHeld.description)
             }
         }
-        .padding()
         .alert(item: $model.error) { error in
-            Alert(title: Text("Error"), message: Text(error.message), dismissButton: .default(Text("OK")))
+            Alert(title: Text("حدث خطأ"), message: Text(error.message), dismissButton: .default(Text("اغلاق")))
         }
     }
     
@@ -62,6 +58,7 @@ struct CalculatorView: View {
               }
           }
       }
+    
 }
 
 struct SearchCompaniesView: View {

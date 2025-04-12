@@ -1,0 +1,57 @@
+//
+//  HoldingPeriodView.swift
+//  Naqa
+//
+//  Created by Lulwah almisfer on 22/02/2025.
+//
+
+import SwiftUI
+
+struct HoldingPeriodView: View {
+    @State private var selectionMode: SelectionMode = .dateRange
+    @State private var fromDate: Date = Date()
+    @State private var toDate: Date = Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date()
+    @State private var daysCount: String = ""
+
+    enum SelectionMode: String, CaseIterable {
+        case dateRange = "تحديد بالتواريخ"
+        case daysCount = "تحديد بعدد الأيام"
+    }
+
+    var body: some View {
+        Section(header: Text("فترة التملك")) {
+
+            Picker("Selection Mode", selection: $selectionMode) {
+                ForEach(SelectionMode.allCases, id: \.self) { mode in
+                    Text(mode.rawValue)
+                }
+            }
+            .pickerStyle(SegmentedPickerStyle())
+
+            if selectionMode == .dateRange {
+                    DatePicker("من", selection: $fromDate, displayedComponents: .date)
+                        .onChange(of: fromDate) { oldValue, newValue in
+                            if newValue > toDate {
+                                toDate = newValue
+                            }
+                        }
+
+                    DatePicker("إلى", selection: $toDate, in: fromDate..., displayedComponents: .date)
+            } else {
+                    TextField("أدخل عدد الأيام", text: $daysCount)
+                        .keyboardType(.numberPad)
+                        .onChange(of: daysCount) { oldValue, newValue in
+                            updateToDate()
+                        }
+                }
+            }
+    }
+
+    private func updateToDate() {
+        if let days = Int(daysCount), days > 0 {
+            toDate = Calendar.current.date(byAdding: .day, value: days - 1, to: fromDate) ?? fromDate
+        }
+    }
+}
+
+
