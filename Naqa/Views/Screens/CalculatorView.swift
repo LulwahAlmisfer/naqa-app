@@ -10,8 +10,6 @@ import SwiftUI
 struct CalculatorView: View {
     @EnvironmentObject private var model: Model
     @Environment(Router.self) private var router
-    @State private var selectedDates: Set<DateComponents> = []
-
     
     
     var body: some View {
@@ -29,9 +27,9 @@ struct CalculatorView: View {
             
             TextField("عدد الأسهم", text: $model.stocksCount)
          
-            HoldingPeriodView()
+            HoldingPeriodView(fromDate: $model.fromDate, toDate: $model.toDate)
             
-            Button("calculate") {
+            Button("إحسب") {
                 Task{ try await model.calculatePurificationForYear() }
             }
             .disabled(model.stocksCount.isEmpty)
@@ -41,13 +39,18 @@ struct CalculatorView: View {
             }
             
             if let result = model.response {
-                Text(result.purificationAmount.description)
-                Text(result.purificationRate.description)
-                Text(result.daysHeld.description)
+                Text("مبلغ التطهير: \(result.purificationAmount.description)")
+                Text("نسبة التطهير: \(result.purificationRate.description)")
+                Text("عدد أيام الاحتفاظ: \(result.daysHeld.description)")
             }
         }
         .alert(item: $model.error) { error in
             Alert(title: Text("حدث خطأ"), message: Text(error.message), dismissButton: .default(Text("اغلاق")))
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                clearButton
+            }
         }
     }
     
@@ -58,6 +61,12 @@ struct CalculatorView: View {
               }
           }
       }
+    
+    var clearButton: some View {
+        Button("مسح"){
+            model.clear()
+        }
+    }
     
 }
 
