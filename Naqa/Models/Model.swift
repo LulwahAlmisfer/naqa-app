@@ -45,7 +45,8 @@ class Model: ObservableObject {
     @Published var response: CalculatePurificationResponse? = nil
     @Published var selectedStock: Stock?
     @Published var stocksCount: String = ""
-    
+    @Published var daysCount: String = ""
+
     @Published var isLoadingAnswer: Bool = false
     @Published var error: NaqaErrorResponse?
 
@@ -112,7 +113,7 @@ class Model: ObservableObject {
         
         do {
             isLoadingAnswer = true
-            self.response = try await stockService.calculatePurification(year: screen2SelectedYear, request: .init(startDate: fromDate, endDate: toDate, numberOfStocks: stocksCountInt, stockCode: code))
+            self.response = try await stockService.calculatePurification(year: screen2SelectedYear, request: .init(startDate: fromDate, endDate: toDate.addOneDay(), numberOfStocks: stocksCountInt, stockCode: code))
             isLoadingAnswer = false
         } catch let error as StockServiceError {
             isLoadingAnswer = false
@@ -128,6 +129,7 @@ class Model: ObservableObject {
         fromDate = screen2SelectedYear.firstDayOfYear()
         toDate = screen2SelectedYear.lastDayOfYear()
         stocksCount = ""
+        daysCount = ""
         selectedStock = nil
     }
     

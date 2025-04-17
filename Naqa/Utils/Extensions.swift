@@ -29,3 +29,8 @@ extension String {
     
 }
 
+extension Date {
+    func addOneDay() -> Date {
+        return Calendar.current.date(byAdding: .day, value: 1, to: self) ?? self
+    }
+}
