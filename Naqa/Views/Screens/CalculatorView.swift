@@ -18,6 +18,7 @@ struct CalculatorView: View {
         Form{
             
             Button {
+                hideKeyboard()
                 router.calculatorRoutes.append(.search)
             } label: {
                 Text(model.selectedStock?.name ?? "إختر شركة")
@@ -26,10 +27,12 @@ struct CalculatorView: View {
             picker
             
             TextField("عدد الأسهم", text: $model.stocksCount)
-         
+                .keyboardType(.asciiCapableNumberPad)
+
             HoldingPeriodView(daysCount: $model.daysCount, fromDate: $model.fromDate, toDate: $model.toDate)
             
             Button("إحسب") {
+                hideKeyboard()
                 Task{ try await model.calculatePurificationForYear() }
             }
             .disabled(model.stocksCount.isEmpty)
@@ -44,13 +47,9 @@ struct CalculatorView: View {
                 Text("عدد أيام الاحتفاظ: \(result.daysHeld.description)")
             }
         }
+        .toolbar { ToolbarItem(placement: .topBarLeading) { clearButton } }
         .alert(item: $model.error) { error in
             Alert(title: Text("حدث خطأ"), message: Text(error.message), dismissButton: .default(Text("اغلاق")))
-        }
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                clearButton
-            }
         }
     }
     
@@ -77,7 +76,7 @@ struct SearchCompaniesView: View {
     
     var body: some View {
         
-        List(model.screen2FilteredStocks) { stock in
+        List(model.screen2FilteredStocks.filter{$0.shariaOpinion != .Prohibited}) { stock in
             Button{
                 model.selectedStock = stock
                 dismiss()

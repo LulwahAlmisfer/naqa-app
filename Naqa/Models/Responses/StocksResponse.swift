@@ -13,7 +13,7 @@ struct StockData: Codable {
 struct Stock: Codable,Identifiable {
     let id, name, code, sector: String
     let shariaOpinion: ShariaOpinion
-    let purification: String
+    let purification: String?
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
@@ -28,7 +28,14 @@ struct Stock: Codable,Identifiable {
         name = try container.decode(String.self, forKey: .name)
         code = try container.decode(String.self, forKey: .code)
         sector = try container.decode(String.self, forKey: .sector)
-        purification = try container.decode(String.self, forKey: .purification)
+        
+        if let purification = try? container.decodeIfPresent(String.self, forKey: .purification), purification != "NaN" {
+            self.purification = purification
+        } else {
+            self.purification = nil
+        }
+        
+        
         shariaOpinion = (try? container.decode(ShariaOpinion.self, forKey: .shariaOpinion)) ?? .none
     }
     
@@ -39,8 +46,24 @@ enum ShariaOpinion: String, CaseIterable,Codable {
     case pure = "نقية"
     case mixed = "مختلطة"
     case nonCompliant = "غير متوافقة"
+    case Prohibited = "غير متوافقة النشاط"
     case none
     
+    
+    var title: String {
+        switch self {
+        case .pure:
+            return "نقية"
+        case .mixed:
+            return "مختلطة"
+        case .nonCompliant:
+            return "غير متوافقة"
+        case .Prohibited:
+            return "محرمة النشاط"
+        case .none:
+            return "لا يوجد"
+        }
+    }
     var description: String {
         switch self {
         case .pure:
@@ -49,6 +72,8 @@ enum ShariaOpinion: String, CaseIterable,Codable {
             return "أسهم تحتاج إلى تطهير"
         case .nonCompliant:
             return "أسهم غير متوافقة مع الشريعة"
+        case .Prohibited:
+            return "هي ما كان أصل نشاطها محرما، حتى لو تمولت أو استثمرت في مباح، مثل البنوك التجارية التقليدية"
         case .none:
             return ""
         }
@@ -62,8 +87,10 @@ enum ShariaOpinion: String, CaseIterable,Codable {
             2
         case .nonCompliant:
             3
-        case .none:
+        case .Prohibited:
             4
+        case .none:
+            5
         }
     }
     
@@ -74,6 +101,8 @@ enum ShariaOpinion: String, CaseIterable,Codable {
         case .mixed:
             return .yellow
         case .nonCompliant:
+            return .orange
+        case .Prohibited:
             return .red
         case .none:
             return .gray

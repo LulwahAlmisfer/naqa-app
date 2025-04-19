@@ -9,19 +9,19 @@ import SwiftUI
 
 struct HoldingPeriodView: View {
     @State private var selectionMode: SelectionMode = .dateRange
-    @Binding var daysCount: String 
+    @Binding var daysCount: String
     
     @Binding var fromDate: Date
     @Binding var toDate: Date
-
+    
     enum SelectionMode: String, CaseIterable {
         case dateRange = "تحديد بالتواريخ"
         case daysCount = "تحديد بعدد الأيام"
     }
-
+    
     var body: some View {
         Section(header: Text("فترة التملك")) {
-
+            
             //TODO: add logic when changing the picker (with temp value)
             Picker("Selection Mode", selection: $selectionMode) {
                 ForEach(SelectionMode.allCases, id: \.self) { mode in
@@ -29,24 +29,27 @@ struct HoldingPeriodView: View {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-
+            
             if selectionMode == .dateRange {
-                    DatePicker("من", selection: $fromDate, displayedComponents: .date)
-                        .onChange(of: fromDate) { oldValue, newValue in
-                            if newValue > toDate {
-                                toDate = newValue
-                            }
+                DatePicker("من", selection: $fromDate, displayedComponents: .date)
+                    .environment(\.locale, Locale(identifier: "ar"))
+                    .onChange(of: fromDate) { oldValue, newValue in
+                        if newValue > toDate {
+                            toDate = newValue
                         }
-
-                    DatePicker("إلى", selection: $toDate, in: fromDate..., displayedComponents: .date)
+                    }
+                
+                DatePicker("إلى", selection: $toDate, in: fromDate..., displayedComponents: .date)
+                    .environment(\.locale, Locale(identifier: "ar"))
             } else {
-                    TextField("أدخل عدد الأيام", text: $daysCount)
-                        .keyboardType(.numberPad)
-                        .onChange(of: daysCount) { oldValue, newValue in
-                            updateToDate()
-                        }
-                }
+                TextField("أدخل عدد الأيام", text: $daysCount)
+                    .keyboardType(.numberPad)
+                    .onChange(of: daysCount) { oldValue, newValue in
+                        updateToDate()
+                    }
             }
+        }
+        
     }
 
     private func updateToDate() {
