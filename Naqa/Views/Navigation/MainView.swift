@@ -15,10 +15,7 @@ struct MainView: View {
         AppTabView(selection: $selectedScreen)
             .environment(Router())
             .environmentObject(Model(stockService: service))
+            .environment(\.layoutDirection, .rightToLeft) // better to find another solution
     }
     
-}
-
-#Preview {
-    MainView()
 }
