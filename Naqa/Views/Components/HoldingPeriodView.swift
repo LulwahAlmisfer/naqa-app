@@ -29,6 +29,7 @@ struct HoldingPeriodView: View {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
+            .tint(.purple)
             
             if selectionMode == .dateRange {
                 DatePicker("من", selection: $fromDate, displayedComponents: .date)
