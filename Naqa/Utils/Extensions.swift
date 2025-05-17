@@ -38,3 +38,13 @@ extension Date {
 func hideKeyboard() {
     UIApplication.shared.sendAction(#selector(UIResponder.resolveInstanceMethod), to: nil, from: nil, for: nil)
 }
+
+struct Helper {
+    static func goToAppSetting() {
+        DispatchQueue.main.async {
+            if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+                UIApplication.shared.open(appSettings)
+            }
+        }
+    }
+}

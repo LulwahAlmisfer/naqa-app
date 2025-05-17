@@ -99,11 +99,12 @@
 				};
 			};
 			buildConfigurationList = 2F1CAA282D64878E007D1FEB /* Build configuration list for PBXProject "Naqa" */;
-			developmentRegion = ar;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
 				ar,
+				en,
 			);
 			mainGroup = 2F1CAA242D64878E007D1FEB;
 			minimizedProjectReferenceProxies = 1;

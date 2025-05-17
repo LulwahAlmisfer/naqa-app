@@ -9,7 +9,7 @@ import SwiftUI
 import Observation
 
 enum AppScreen: Hashable, Identifiable, CaseIterable {
-    
+    case settings
     case calculator
     case stocks
     
@@ -25,6 +25,8 @@ extension AppScreen {
             Label("الحاسبة", systemImage: "percent")
         case .stocks:
             Label("القوائم", systemImage: "chart.bar.xaxis")
+        case .settings:
+            Label("الإعدادات", systemImage: "gearshape")
         }
     }
     
@@ -35,6 +37,8 @@ extension AppScreen {
             CalculatorNavigationStack()
         case .stocks:
             StocksListView()
+        case .settings:
+            SettingsView()
         }
     }
     
