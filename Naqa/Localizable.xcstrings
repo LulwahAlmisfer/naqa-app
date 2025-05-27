@@ -14,6 +14,16 @@
         }
       }
     },
+    "Naqaa Team" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فريق نقاء"
+          }
+        }
+      }
+    },
     "Settings" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -34,11 +44,15 @@
     "todo about almaqased" : {
 
     },
-    "todo ehsan link" : {
-
-    },
-    "todo team" : {
-
+    "What is Naqa ?" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ماهو نقاء ؟"
+          }
+        }
+      }
     },
     "أدخل عدد الأيام" : {
       "localizations" : {
@@ -266,6 +280,9 @@
         }
       }
     },
+    "تبرع بخدمة إحسان بتطهير الأسهم" : {
+
+    },
     "تحديد بالتواريخ" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -350,6 +367,12 @@
     },
     "عن نقاء" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عن نقاء"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -504,6 +527,9 @@
           }
         }
       }
+    },
+    "نقاء هو حاسبة تطهير الأسهم تساعد المستثمرين على حساب المبالغ الواجب تطهيرها وفقًا للضوابط الشرعية. يتيح لك التطبيق إدخال بيانات استثمارك بسهولة والحصول على النتائج بسرعة. محتوى مبدئي احتاج مساعده" : {
+
     },
     "نقية" : {
       "extractionState" : "manual",
