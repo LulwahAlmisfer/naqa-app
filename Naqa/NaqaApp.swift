@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct NaqaApp: App {
+    @State private var isActive = false
+    
     var body: some Scene {
         WindowGroup {
-            MainView()
+            SplashScreenView()
         }
     }
 }
