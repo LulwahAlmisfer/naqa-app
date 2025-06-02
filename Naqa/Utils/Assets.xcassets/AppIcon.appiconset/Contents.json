@@ -10,22 +10,10 @@
       "appearances" : [
         {
           "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "appstore 1.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "size" : "1024x1024"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
           "value" : "tinted"
         }
       ],
-      "filename" : "appstore 2.png",
+      "filename" : "appstore 1.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"

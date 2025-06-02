@@ -76,7 +76,7 @@ struct StocksListView: View {
     var marketSegmentedControl: some View {
         Picker("السوق", selection: $selectedMarket) {
             ForEach(Market.allCases, id: \.self) { market in
-                Text(market.rawValue).tag(market)
+                Text(LocalizedStringKey(market.rawValue)).tag(market)
             }
         }
         .pickerStyle(.segmented)
