@@ -33,7 +33,7 @@ struct StocksListView: View {
                 
                 ForEach(filteredStocks) { stock in
                     HStack {
-                        CompanyLogoView(code: stock.code)
+                        AsyncCompanyLogoView(ticker: stock.code)
                         
                         Text(stock.name)
                             .minimumScaleFactor(0.5)

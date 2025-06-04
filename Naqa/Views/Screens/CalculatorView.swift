@@ -18,6 +18,8 @@ struct CalculatorView: View {
         @Bindable var router = router
 
         Form{
+            AsyncImage(url: URL(string: "https://web.alrajhi-capital.sa/stock-images/2222.webp")!)
+            
             Section("معلومات الشراء") {
                 Button {
                     hideKeyboard()
@@ -25,7 +27,7 @@ struct CalculatorView: View {
                 } label: {
                     HStack {
                         if let code = model.selectedStock?.code {
-                            CompanyLogoView(code: code)
+                            AsyncCompanyLogoView(ticker: code)
                         }
                         Text(LocalizedStringKey(model.selectedStock?.name ?? "إختر الشركة"))
                         Spacer()
