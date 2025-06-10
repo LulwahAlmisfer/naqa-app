@@ -101,11 +101,12 @@ struct SettingsView: View {
     var ehsan: some View {
         Link(destination: URL(string: "https://ehsan.sa/stockspurification")!) {
             HStack {
-                Text("تبرع بخدمة إحسان بتطهير الأسهم")
+                Text("تبرع بخدمة إحسان لتطهير الأسهم")
                 Spacer()
                 Image("ehsan")
                     .resizable()
-                    .frame(width: 30,height: 30)
+                    .renderingMode(.none)
+                    .frame(width: 35,height: 35)
             }
         }
     }

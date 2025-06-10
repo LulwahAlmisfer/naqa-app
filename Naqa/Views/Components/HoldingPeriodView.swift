@@ -29,7 +29,7 @@ struct HoldingPeriodView: View {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-            .tint(.purple)
+            .tint(.naqaLightPurple)
             
             if selectionMode == .dateRange {
                 DatePicker(LocalizedStringKey("من"), selection: $fromDate, displayedComponents: .date)

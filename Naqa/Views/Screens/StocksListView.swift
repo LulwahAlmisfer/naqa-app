@@ -31,9 +31,16 @@ struct StocksListView: View {
                 
                 picker
                 
-                ForEach(filteredStocks) { stock in
+                ForEach(model.viewState == .done ? filteredStocks : model.dummyStocks) { stock in
                     HStack {
-                        AsyncCompanyLogoView(ticker: stock.code)
+                        
+                        if model.viewState == .done {
+                            AsyncCompanyLogoView(ticker: stock.code)
+                        } else {
+                            Circle()
+                                .foregroundStyle(.white)
+                                .frame(width: 30, height: 30)
+                        }
                         
                         Text(stock.name)
                             .minimumScaleFactor(0.5)
@@ -43,8 +50,8 @@ struct StocksListView: View {
                         Spacer()
                         
                         if let purification = stock.purification {
-                            Text(purification)
-                                .font(.caption)
+                            Text("%\(purification)")
+                                .font(.callout)
                         }
                         
                         Text(LocalizedStringKey(stock.shariaOpinion.title))
@@ -56,6 +63,8 @@ struct StocksListView: View {
                     }
                 }
             }
+            .disabled(model.viewState == .loading)
+            .shimmer(model.viewState)
             .navigationTitle("القوائم")
             .searchable(text: $model.screen1SearchText,
                         placement: .navigationBarDrawer(displayMode: .always)
@@ -89,7 +98,7 @@ struct StocksListView: View {
                   Text(model.screen1SelectedYear)
                       .foregroundColor(.primary)
                 Image(systemName: "chevron.down")
-                    .foregroundColor(.purple)
+                    .foregroundColor(.naqaLightPurple)
                 Spacer()
             }
             .padding(8)

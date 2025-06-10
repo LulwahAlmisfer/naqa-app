@@ -48,3 +48,14 @@ struct Helper {
         }
     }
 }
+
+extension Double {
+    func rounded(to places: Int) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = places
+        formatter.maximumFractionDigits = places
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter.string(from: NSNumber(value: self)) ?? "\(self)"
+    }
+}
