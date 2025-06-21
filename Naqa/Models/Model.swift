@@ -5,14 +5,12 @@
 //  Created by Lulwah almisfer on 18/02/2025.
 //
 
-import Foundation
-
-enum OrderError: Error {
-    case custom(String)
-}
+import SwiftUI
 
 @MainActor
 class Model: ObservableObject {
+    @Published var viewState: ViewState = .none
+    
     @Published var fromDate: Date = .now
     @Published var toDate: Date = .now
 
@@ -23,6 +21,8 @@ class Model: ObservableObject {
     
     @Published var screen1Stocks: [Stock] = []
     @Published var screen2Stocks: [Stock] = []
+    
+    @Published var dummyStocks: [Stock] = []
     
     @Published var screen1SearchText: String = ""
     @Published var screen2SearchText: String = ""
@@ -58,6 +58,8 @@ class Model: ObservableObject {
     }
     
     func fetchOnAppear() async {
+        self.update(viewState: .loading)
+        getDummyDataFromJSON()
         await getAvailableYears()
         await getStocksForScreen1SelectedYear()
         await getStocksForScreen2SelectedYear()
@@ -74,20 +76,22 @@ class Model: ObservableObject {
                 toDate = lastYear.lastDayOfYear()
             }
         } catch {
-            print(error)
+            self.update(viewState: .failed(error:error))
         }
     }
     
     func getStocksForScreen1SelectedYear() async {
         // TODO: cache layer
-
+        
         do {
+            self.update(viewState: .loading)
             let stocks = try await stockService.getStocksByYear(year: screen1SelectedYear)
             self.screen1Stocks = stocks.sorted{$0.shariaOpinion.order < $1.shariaOpinion.order}
+            self.update(viewState: .done)
         } catch let error as StockServiceError {
             handleStockServiceError(error)
         } catch {
-            print("Unexpected error: \(error.localizedDescription)")
+            self.update(viewState: .failed(error:error))
         }
     }
     
@@ -100,7 +104,7 @@ class Model: ObservableObject {
         } catch let error as StockServiceError {
             handleStockServiceError(error)
         } catch {
-            print("Unexpected error: \(error.localizedDescription)")
+            self.update(viewState: .failed(error:error))
         }
     }
     
@@ -122,6 +126,14 @@ class Model: ObservableObject {
             isLoadingAnswer = false
             print("Unexpected error: \(error.localizedDescription)")
         }
+    }
+    
+    func getDummyDataFromJSON() {
+        let path = Bundle.main.path(forResource: "Naqa2013", ofType: "json")!
+        let jsonData = try! Data(contentsOf: URL(fileURLWithPath: path))
+        let decoder = JSONDecoder()
+        let dummyDataResponse: StockData = try! decoder.decode(StockData.self, from: jsonData)
+        self.dummyStocks = dummyDataResponse.stocks.sorted{$0.shariaOpinion.order < $1.shariaOpinion.order}
     }
     
     func clear() {
@@ -148,5 +160,17 @@ class Model: ObservableObject {
         }
     }
 
+    
+}
+
+extension Model {
+    
+    func update(viewState: ViewState) {
+        DispatchQueue.main.async {
+            withAnimation {
+                self.viewState = viewState
+            }
+        }
+    }
     
 }
