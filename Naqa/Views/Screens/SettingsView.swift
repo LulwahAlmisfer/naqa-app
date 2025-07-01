@@ -11,6 +11,7 @@ struct SettingsView: View {
     @Environment(\.layoutDirection) private var layoutDirection
     @Environment(\.colorScheme) var colorScheme
     @State private var showIconInToolbar = false
+    @State private var showIcon = true
     
 
     
@@ -25,7 +26,8 @@ struct SettingsView: View {
                         .frame(maxWidth: .infinity)
                         .background(Color(uiColor: colorScheme == .light ? UIColor.secondarySystemBackground : UIColor.black))
                         .listRowBackground(Color.clear)
-                        .opacity(showIconInToolbar ? 0.01 : 1)
+                        .opacity(showIcon ? 1 : 0)
+                        .transition(.opacity)
 
                     naqaInfo
                     team
@@ -37,7 +39,14 @@ struct SettingsView: View {
                 }
                 .onChange(of: geometry.frame(in: .global).minY) { oldValue, newValue in
                     if newValue < 110 {
-                        withAnimation(Animation.default.delay(0.4)) { showIconInToolbar = true }
+                        withAnimation(Animation.default.delay(0.2)) { showIcon = false }
+                    } else {
+                        withAnimation(Animation.default.delay(0.2)) { showIcon = true }
+                    }
+                    
+                    
+                    if newValue < 115 {
+                        withAnimation(Animation.default.delay(0.2)) { showIconInToolbar = true }
                     } else {
                         withAnimation(Animation.default.delay(0.2)) { showIconInToolbar = false }
                     }
@@ -48,9 +57,9 @@ struct SettingsView: View {
             .navigationTitle("عن نقاء")
             .toolbar {
                 ToolbarItem(placement: .automatic) {
-                    if showIconInToolbar {
-                        icon
-                    }
+                        iconToolBar
+                            .transition(.opacity)
+                            .opacity(showIconInToolbar ? 1 : 0)
                 }
             }
         }
@@ -65,19 +74,36 @@ struct SettingsView: View {
             Helper.goToAppSetting()
         }label: {
             HStack {
+                Image(systemName: "globe")
+                    .frame(width: 35,height: 35)
+                    .foregroundStyle(.naqaLightPurple)
+                
                 Text("Change Language")
+                    .foregroundStyle(colorScheme == .dark ? .white : .black)
                 Spacer()
                 Image(systemName: "chevron.left")
                     .rotationEffect(layoutDirection == .leftToRight ? Angle(degrees: 180) : Angle(degrees: 0))
             }
         }
     }
+    
     var icon: some View {
         HStack {
             Spacer()
             Image(.naqaIcon)
                 .resizable()
-                .frame(width: showIconInToolbar ? 25 : 100,height: showIconInToolbar ? 25 : 100)
+                .frame(width:  100,height: 100)
+            Spacer()
+        }
+        .padding()
+    }
+    
+    var iconToolBar: some View {
+        HStack {
+            Spacer()
+            Image(.naqaIcon)
+                .resizable()
+                .frame(width: 25 ,height: 25)
             Spacer()
         }
         .padding()
@@ -117,7 +143,7 @@ struct SettingsView: View {
     
     var naqaInfo: some View {
         Section("What is Naqa ?") {
-            Text("نقاء هو حاسبة تطهير الأسهم تساعد المستثمرين على حساب المبالغ الواجب تطهيرها وفقًا للضوابط الشرعية. يتيح لك التطبيق إدخال بيانات استثمارك بسهولة والحصول على النتائج بسهولة.")
+            Text("NAQA_DEF")
         }
         .textCase(nil)
         
@@ -128,9 +154,11 @@ struct SettingsView: View {
             HStack {
                 Image("ehsan")
                     .resizable()
-                    .renderingMode(.none)
+                    .renderingMode(.template)
+                    .foregroundStyle(.naqaLightPurple)
                     .frame(width: 35,height: 35)
                 Text("تبرع بخدمة إحسان لتطهير الأسهم")
+                    .foregroundStyle(colorScheme == .dark ? .white : .black)
                 Spacer()
                 Image(systemName: "chevron.left")
                     .rotationEffect(layoutDirection == .leftToRight ? Angle(degrees: 180) : Angle(degrees: 0))
@@ -144,7 +172,7 @@ struct SettingsView: View {
                 Text("هذه الخدمة مبنية على قوائم التطهير المنشورة للعامة من قبل فضيلة الشيخ الدكتور محمد بن سعود العصيمي (المشرف العام على موقع المقاصد). تم جمع وتنظيم البيانات من:")
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    bulletPointView("حاسبة التطهير - موقع المقاصد")
+                    bulletPointView("موقع المقاصد")
                     bulletPointView("قوائم التحليل المالي للشركات المنشورة للعامة")
                     bulletPointView("حسابات نسب التطهير المعتمدة من قبل الشيخ د. محمد العصيمي")
                 }
@@ -152,6 +180,8 @@ struct SettingsView: View {
                 .foregroundColor(.gray)
             }
         }
+        .textCase(nil)
+
     }
 
     var supervision: some View {
@@ -163,10 +193,11 @@ struct SettingsView: View {
                     .foregroundColor(.gray)
             }
         }
+        .textCase(nil)
     }
     
     @ViewBuilder
-    func bulletPointView(_ text: String) -> some View {
+    func bulletPointView(_ text: LocalizedStringResource) -> some View {
         HStack(alignment: .top, spacing: 6) {
             Circle()
                 .fill(Color.naqaLightPurple)
