@@ -41,8 +41,8 @@ struct HoldingPeriodView: View {
                 
                 DatePicker(LocalizedStringKey("إلى"), selection: $toDate, in: fromDate..., displayedComponents: .date)
             } else {
-                TextField("أدخل عدد الأيام", text: $daysCount)
-                    .keyboardType(.numberPad)
+                CustomTextField("أدخل عدد الأيام", text: $daysCount)
+                    .keyboardType(.asciiCapableNumberPad)
                     .onChange(of: daysCount) { oldValue, newValue in
                         updateToDate()
                     }

@@ -71,9 +71,6 @@ class Model: ObservableObject {
             if let lastYear = years.last {
                 self.screen1SelectedYear = lastYear
                 self.screen2SelectedYear = lastYear
-                
-                fromDate = lastYear.firstDayOfYear()
-                toDate = lastYear.lastDayOfYear()
             }
         } catch {
             self.update(viewState: .failed(error:error))
@@ -138,8 +135,6 @@ class Model: ObservableObject {
     
     func clear() {
         response = nil
-        fromDate = screen2SelectedYear.firstDayOfYear()
-        toDate = screen2SelectedYear.lastDayOfYear()
         stocksCount = ""
         daysCount = ""
         selectedStock = nil
