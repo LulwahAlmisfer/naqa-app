@@ -53,6 +53,7 @@ struct SettingsView: View {
                     
                 }
             }
+            .logEvent("SettingsView_Opened")
             .scrollIndicators(.hidden)
             .navigationTitle("عن نقاء")
             .toolbar {

@@ -63,6 +63,7 @@ struct StocksListView: View {
                     }
                 }
             }
+            .logEvent("StockListView_Opended")
             .disabled(model.viewState == .loading)
             .shimmer(model.viewState)
             .navigationTitle("القوائم")
