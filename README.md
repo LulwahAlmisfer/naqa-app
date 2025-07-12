@@ -1,5 +1,7 @@
-# Naqaa | نقاء 
+<div align="center">
 
+# Naqaa | نقاء 
+<div>
 <p align="center">
     <img src="/NaqaaIcon.png" alt="Naqaa Icon" width="200" height="200">
 </p>
@@ -22,4 +24,5 @@
   # Technologies 
 - App: iOS (SwiftUI)  [App Store](https://apps.apple.com/app/id6742379470)
 - Backend: [Source Code Repository](https://github.com/anqorithm/naqa-api)
+
 
