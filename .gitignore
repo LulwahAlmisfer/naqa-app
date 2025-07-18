@@ -4,6 +4,7 @@ DerivedData/
 *.xcuserstate
 *.xcscmblueprint
 !default.xcworkspace/
+!Package.resolved
 
 # User-specific Xcode settings
 *.xcuserdatad/
