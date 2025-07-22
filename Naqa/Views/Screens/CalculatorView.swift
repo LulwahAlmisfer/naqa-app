@@ -186,11 +186,17 @@ struct SearchCompaniesView: View {
             }label: {
                 HStack {
                     AsyncCompanyLogoView(ticker: stock.code, urlString:stock.logo)
-                      
-                    Text(Helper.isCurrentLanguageArabic() ? stock.name_ar : stock.name_en)                        .foregroundStyle(colorScheme == .dark ? .white : .black)
-                        .minimumScaleFactor(0.5)
-                        .lineLimit(1)
-                        .font(.system(size: Helper.isCurrentLanguageArabic() ? 17 : 10))
+                     
+                    VStack(alignment: .leading){
+                        Text(Helper.isCurrentLanguageArabic() ? stock.name_ar : stock.name_en)                        .foregroundStyle(colorScheme == .dark ? .white : .black)
+                            .minimumScaleFactor(0.5)
+                            .lineLimit(1)
+                            .font(.system(size: Helper.isCurrentLanguageArabic() ? 17 : 10))
+                        Text(stock.code)
+                            .font(.caption)
+                            .foregroundStyle(.gray)
+                    }
+             
                 }
             }
         }

@@ -26,7 +26,7 @@ struct AsyncCompanyLogoView: View {
                 ProgressView()
             }
         }
-        .frame(width: 30, height: 30)
+        .frame(width: 33, height: 33)
         .clipShape(Circle())
         .onAppear {
             if let url = URL(string: urlString) {
