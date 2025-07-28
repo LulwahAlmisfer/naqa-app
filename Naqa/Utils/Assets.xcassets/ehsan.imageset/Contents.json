@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "شعار منصة إحسان – SVG 2.png",
+      "filename" : "Image.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "شعار منصة إحسان – SVG 3.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "شعار منصة إحسان – SVG 4.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -83,7 +83,7 @@ class Model: ObservableObject {
         do {
             self.update(viewState: .loading)
             let stocks = try await stockService.getStocksByYear(year: screen1SelectedYear)
-            self.screen1Stocks = stocks.sorted{$0.shariaOpinion.order < $1.shariaOpinion.order}
+            self.screen1Stocks = stocks.sortedBySharia()
             self.update(viewState: .done)
         } catch let error as StockServiceError {
             handleStockServiceError(error)
@@ -97,7 +97,7 @@ class Model: ObservableObject {
 
         do {
             let stocks = try await stockService.getStocksByYear(year: screen2SelectedYear)
-            self.screen2Stocks = stocks.sorted{$0.shariaOpinion.order < $1.shariaOpinion.order}
+            self.screen2Stocks = stocks.sortedBySharia()
         } catch let error as StockServiceError {
             handleStockServiceError(error)
         } catch {
@@ -130,7 +130,7 @@ class Model: ObservableObject {
         let jsonData = try! Data(contentsOf: URL(fileURLWithPath: path))
         let decoder = JSONDecoder()
         let dummyDataResponse: StockData = try! decoder.decode(StockData.self, from: jsonData)
-        self.dummyStocks = dummyDataResponse.stocks.sorted{$0.shariaOpinion.order < $1.shariaOpinion.order}
+        self.dummyStocks = dummyDataResponse.stocks.sortedBySharia()
     }
     
     func clear() {
