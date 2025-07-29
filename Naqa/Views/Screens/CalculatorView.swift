@@ -11,7 +11,8 @@ import PostHog
 struct CalculatorView: View {
     @EnvironmentObject private var model: Model
     @Environment(Router.self) private var router
-    
+    @Environment(\.colorScheme) var colorScheme
+
     @Environment(\.layoutDirection) private var layoutDirection
     @State private var showSheet = false
     
@@ -66,6 +67,7 @@ struct CalculatorView: View {
                         Text("%\(result.purificationRate.rounded(to: 4))")
                     }
                 }
+                ehsan
             }
         }
         .logEvent("CalculatorView_Opened")
@@ -150,6 +152,25 @@ struct CalculatorView: View {
     var clearButton: some View {
         Button("مسح"){
             model.clear()
+        }
+    }
+    var ehsan: some View {
+        Link(destination: URL(string: "https://ehsan.sa/stockspurification")!) {
+            HStack {
+                Image("ehsan")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20) // Match the size
+                    .background(.white)
+                    .clipShape(.circle)
+                
+                Text("تبرع بخدمة إحسان لتطهير الأسهم")
+                    .foregroundStyle(colorScheme == .dark ? .white : .black)
+                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                
+                Image(systemName: "chevron.left")
+                    .rotationEffect(layoutDirection == .leftToRight ? Angle(degrees: 180) : Angle(degrees: 0))
+            }
         }
     }
     
