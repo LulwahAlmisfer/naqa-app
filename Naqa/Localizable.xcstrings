@@ -161,6 +161,7 @@
       }
     },
     "إختر السنة" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -210,6 +211,7 @@
       }
     },
     "اختر السنة" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

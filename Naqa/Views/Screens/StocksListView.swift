@@ -94,39 +94,29 @@ struct StocksListView: View {
     }
 
     var picker: some View {
-        Button(action: { showSheet.toggle() }) {
+        Menu {
+            ForEach(model.years.reversed(), id: \.self) { year in
+                Button(action: { model.screen1SelectedYear = year }) {
+                    HStack {
+                        Text(year)
+                        if model.screen1SelectedYear == year {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                }
+            }
+        }
+        label: {
             HStack {
-                  Text(model.screen1SelectedYear)
-                      .foregroundColor(.primary)
-                Image(systemName: "chevron.down")
+                Text(model.screen1SelectedYear)
+                    .foregroundColor(.primary)
+                Image(systemName: "chevron.up.chevron.down")
                     .foregroundColor(.naqaLightPurple)
-                Spacer()
             }
             .padding(8)
         }
-        .sheet(isPresented: $showSheet) {
-            NavigationView {
-                List(model.years.reversed(), id: \.self) { year in
-                    Button(action: {
-                        model.screen1SelectedYear = year
-                        showSheet = false
-                    }) {
-                        HStack {
-                            Text(year)
-                            Spacer()
-                            if model.screen1SelectedYear == year {
-                                Image(systemName: "checkmark")
-                            }
-                        }
-                        .padding(.vertical, 5)
-                    }
-                }
-                .navigationTitle("اختر السنة")
-            }
-            .presentationDetents([.medium])
-            .presentationDragIndicator(.visible)
-        }
     }
+
 }
 
 
