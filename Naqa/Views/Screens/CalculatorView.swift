@@ -14,7 +14,6 @@ struct CalculatorView: View {
     @Environment(\.colorScheme) var colorScheme
 
     @Environment(\.layoutDirection) private var layoutDirection
-    @State private var showSheet = false
     
     var body: some View {
         @Bindable var router = router
@@ -30,6 +29,7 @@ struct CalculatorView: View {
                             AsyncCompanyLogoView(ticker: code)
                         }
                         Text(LocalizedStringKey(model.selectedStock?.name ?? "إختر الشركة"))
+                            .foregroundStyle(colorScheme == .dark ? .white : .black)
                         Spacer()
                         Image(systemName: "chevron.left")
                             .rotationEffect(layoutDirection == .leftToRight ? Angle(degrees: 180) : Angle(degrees: 0))
