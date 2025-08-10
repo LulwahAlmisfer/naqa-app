@@ -48,6 +48,9 @@ struct Helper {
             }
         }
     }
+    static func isCurrentLanguageArabic() -> Bool {
+        return Locale.current.language.languageCode?.identifier == "ar"
+    }
 }
 
 extension Double {
