@@ -34,7 +34,7 @@ struct StocksListView: View {
                     HStack {
                         
                         if model.viewState == .done {
-                            AsyncCompanyLogoView(ticker: stock.code)
+                            AsyncCompanyLogoView(ticker: stock.code, urlString:stock.logo)
                         } else {
                             Circle()
                                 .foregroundStyle(.white)

@@ -25,8 +25,8 @@ struct CalculatorView: View {
                     router.calculatorRoutes.append(.search)
                 } label: {
                     HStack {
-                        if let code = model.selectedStock?.code {
-                            AsyncCompanyLogoView(ticker: code)
+                        if let stock = model.selectedStock {
+                            AsyncCompanyLogoView(ticker: stock.code, urlString:stock.logo )
                         }
                         Text(LocalizedStringKey((Helper.isCurrentLanguageArabic() ? model.selectedStock?.name_ar : model.selectedStock?.name_en) ?? "إختر الشركة"))
                             .foregroundStyle(colorScheme == .dark ? .white : .black)
@@ -181,10 +181,8 @@ struct SearchCompaniesView: View {
                 dismiss()
             }label: {
                 HStack {
-                    Image(stock.code)
-                        .resizable()
-                        .frame(width: 30,height: 30)
-                        .clipShape(.circle)
+                    AsyncCompanyLogoView(ticker: stock.code, urlString:stock.logo)
+                      
                     Text(Helper.isCurrentLanguageArabic() ? stock.name_ar : stock.name_en)                        .foregroundStyle(colorScheme == .dark ? .white : .black)
                 }
             }

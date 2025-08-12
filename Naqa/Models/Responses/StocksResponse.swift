@@ -12,13 +12,13 @@ struct StockData: Codable {
 }
 
 struct Stock: Codable,Identifiable {
-    let id, name_ar, name_en, code, sector: String
+    let id, name_ar, name_en, code, sector, logo: String
     let shariaOpinion: ShariaOpinion
     let purification: String?
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
-        case name_ar, name_en , code, sector
+        case name_ar, name_en , code, sector, logo
         case shariaOpinion = "sharia_opinion"
         case purification
     }
@@ -38,6 +38,7 @@ struct Stock: Codable,Identifiable {
         }
         
         shariaOpinion = (try? container.decode(ShariaOpinion.self, forKey: .shariaOpinion)) ?? .none
+        logo = try container.decodeIfPresent(String.self, forKey: .logo) ?? ""
     }
     
 }

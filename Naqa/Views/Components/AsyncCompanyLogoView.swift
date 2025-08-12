@@ -12,9 +12,7 @@ struct AsyncCompanyLogoView: View {
     @StateObject private var loader = ImageLoader()
 
     var ticker: String
-    var urlString: String {
-        "https://web.alrajhi-capital.sa/stock-images/\(ticker).webp"
-    }
+    var urlString: String
 
     var body: some View {
         Group {
