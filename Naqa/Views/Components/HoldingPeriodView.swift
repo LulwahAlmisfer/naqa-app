@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HoldingPeriodView: View {
+    @Binding var selectedYear: String
     @State private var selectionMode: SelectionMode = .dateRange
     @Binding var daysCount: String
     
@@ -17,6 +18,15 @@ struct HoldingPeriodView: View {
     enum SelectionMode: String, CaseIterable {
         case dateRange = "تحديد بالتواريخ"
         case daysCount = "تحديد بعدد الأيام"
+    }
+    
+    private var minDate: Date {
+        Calendar.current.date(from: DateComponents(year: 2015, month: 1, day: 1))!
+    }
+    
+    private var maxDate: Date {
+        let year = Int(selectedYear) ?? Calendar.current.component(.year, from: Date())
+        return Calendar.current.date(from: DateComponents(year: year, month: 12, day: 31))!
     }
     
     var body: some View {
@@ -32,14 +42,14 @@ struct HoldingPeriodView: View {
             .tint(.naqaLightPurple)
             
             if selectionMode == .dateRange {
-                DatePicker(LocalizedStringKey("من"), selection: $fromDate, displayedComponents: .date)
+                DatePicker(LocalizedStringKey("من"), selection: $fromDate, in: minDate...maxDate, displayedComponents: .date)
                     .onChange(of: fromDate) { oldValue, newValue in
                         if newValue > toDate {
                             toDate = newValue
                         }
                     }
                 
-                DatePicker(LocalizedStringKey("إلى"), selection: $toDate, in: fromDate..., displayedComponents: .date)
+                DatePicker(LocalizedStringKey("إلى"), selection: $toDate, in: minDate...maxDate , displayedComponents: .date)
             } else {
                 CustomTextField("أدخل عدد الأيام", text: $daysCount)
                     .keyboardType(.asciiCapableNumberPad)
@@ -53,9 +63,23 @@ struct HoldingPeriodView: View {
 
     private func updateToDate() {
         if let days = Int(daysCount), days > 0 {
-            toDate = Calendar.current.date(byAdding: .day, value: days - 1, to: fromDate) ?? fromDate
+            let year = Int(selectedYear) ?? Calendar.current.component(.year, from: Date())
+            
+
+            let maxDate = Calendar.current.date(from: DateComponents(year: year, month: 12, day: 31))!
+            
+
+            let calculatedFrom = Calendar.current.date(byAdding: .day, value: -(days - 1), to: maxDate) ?? maxDate
+            
+            fromDate = max(calculatedFrom, minDate) 
+            toDate = maxDate
         }
     }
+
 }
 
 
+
+#Preview {
+    MainView()
+}

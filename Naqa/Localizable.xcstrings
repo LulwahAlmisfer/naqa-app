@@ -27,6 +27,23 @@
         }
       }
     },
+    "DESC" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يتم إصدار القائمة إلا بعد انتهاء السنة المالية وإصدار القوائم المالية. وبعد إصدار القوائم المالية (والذي عادة يبدأ في يناير ويستمر حتى مارس)، يقوم المركز بدراسة هذه القوائم وإصدار القائمة غالبًا في منتصف السنة (يونيو أو يوليو). فمثلا، قائمة الأسهم للعام ٢٠١٨م صدرت في منتصف عام ٢٠١٩م."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The list is issued only after the end of the fiscal year and the release of the financial statements. After the statements are released (usually starting in January and continuing until March), the center reviews them and issues the list, typically around mid-year (June or July). For example, the 2018 stock list was released in mid-2019. "
+          }
+        }
+      }
+    },
     "iOS Developer" : {
       "localizations" : {
         "ar" : {
@@ -96,6 +113,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Settings"
+          }
+        }
+      }
+    },
+    "TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "متى تصدر القائمة الجديدة؟"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When is the new list released?"
           }
         }
       }

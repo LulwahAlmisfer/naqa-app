@@ -71,14 +71,25 @@ class Model: ObservableObject {
     func getAvailableYears() async {
         do {
             self.years = try await stockService.getAvailableYears()
-            if let lastYear = years.last {
+            if let lastYear = years.last,
+               let yearInt = Int(lastYear) {
+                
                 self.screen1SelectedYear = lastYear
                 self.screen2SelectedYear = lastYear
+
+
+                var calendar = Calendar.current
+                if let startOfYear = calendar.date(from: DateComponents(year: yearInt, month: 1, day: 1)),
+                   let endOfYear = calendar.date(from: DateComponents(year: yearInt, month: 12, day: 31)) {
+                    self.fromDate = startOfYear
+                    self.toDate = endOfYear
+                }
             }
         } catch {
             self.update(viewState: .failed(error:error))
         }
     }
+
     
     func getStocksForScreen1SelectedYear() async {
         // TODO: cache layer

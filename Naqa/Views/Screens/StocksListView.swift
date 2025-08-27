@@ -11,6 +11,7 @@ struct StocksListView: View {
     @EnvironmentObject private var model: Model
     @State private var selectedMarket: Market = .main
     @Environment(\.layoutDirection) private var layoutDirection
+    @State private var showingInfo = false
 
     enum Market: String, CaseIterable {
         case main = "السوق الرئيسي"
@@ -96,30 +97,57 @@ struct StocksListView: View {
         .pickerStyle(.segmented)
         .padding(.vertical, 8)
     }
-
+    
     var picker: some View {
-        Menu {
-            ForEach(model.years.reversed(), id: \.self) { year in
-                Button(action: { model.screen1SelectedYear = year }) {
-                    HStack {
-                        Text(year)
-                        if model.screen1SelectedYear == year {
-                            Image(systemName: "checkmark")
+        HStack {
+            Menu {
+                ForEach(model.years.reversed(), id: \.self) { year in
+                    Button(action: { model.screen1SelectedYear = year }) {
+                        HStack {
+                            Text(year)
+                            if model.screen1SelectedYear == year {
+                                Image(systemName: "checkmark")
+                            }
                         }
                     }
                 }
+            } label: {
+                HStack {
+                    Text(model.screen1SelectedYear)
+                        .foregroundColor(.primary)
+                    Image(systemName: "chevron.up.chevron.down")
+                        .foregroundColor(.naqaLightPurple)
+                }
+                .padding(8)
             }
-        }
-        label: {
-            HStack {
-                Text(model.screen1SelectedYear)
-                    .foregroundColor(.primary)
-                Image(systemName: "chevron.up.chevron.down")
+            
+            Spacer()
+
+            Button {
+                showingInfo = true
+            } label: {
+                Image(systemName: "info.circle")
                     .foregroundColor(.naqaLightPurple)
             }
-            .padding(8)
+            .sheet(isPresented: $showingInfo) {
+                Form {
+                    Text(.init("TITLE"))
+                        .font(.headline)
+                    Text(.init("DESC"))
+                        .font(.body)
+
+                    Section {
+                        Text(.init("موقع المقاصد"))
+                     }
+                }
+                .padding()
+                .presentationDetents([.medium])
+                .presentationDragIndicator(.visible)
+            }
+
         }
     }
+
 
 }
 

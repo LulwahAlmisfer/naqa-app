@@ -44,7 +44,7 @@ struct CalculatorView: View {
                 
             }
           
-            HoldingPeriodView(daysCount: $model.daysCount, fromDate: $model.fromDate, toDate: $model.toDate)
+            HoldingPeriodView(selectedYear: $model.screen2SelectedYear, daysCount: $model.daysCount, fromDate: $model.fromDate, toDate: $model.toDate)
             
             calculate
             
@@ -206,4 +206,8 @@ struct SearchCompaniesView: View {
                     placement:.navigationBarDrawer(displayMode: .always)
                     ,prompt:"إبحث بالاسم أو الرمز")
     }
+}
+
+#Preview {
+    MainView()
 }
