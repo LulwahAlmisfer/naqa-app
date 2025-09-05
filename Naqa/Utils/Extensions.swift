@@ -28,6 +28,10 @@ extension String {
         return calendar.date(from: DateComponents(year: year, month: 12, day: 31)) ?? static2019
     }
     
+    func removingCo() -> String {
+           return self.replacingOccurrences(of: "Co.", with: "")
+    }
+    
 }
 
 extension Date {
