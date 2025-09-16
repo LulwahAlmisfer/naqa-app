@@ -68,7 +68,11 @@ struct CalculatorView: View {
                         Text("%\(result.purificationRate.rounded(to: 4))")
                     }
                 }
-                ehsan
+                
+                if PostHogSDK.shared.isFeatureEnabled("EHSAN") {
+                    ehsan
+                }
+                
             }
         }
         .logEvent("CalculatorView_Opened")
