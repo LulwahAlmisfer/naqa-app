@@ -51,7 +51,7 @@ struct CalculatorView: View {
             if model.isLoadingAnswer {
                 progressView
             } else if let result = model.response {
-                VStack (spacing: 20){
+                VStack(spacing: 20) {
                     HStack {
                         Text("مبلغ التطهير")
                         Spacer()
@@ -60,20 +60,62 @@ struct CalculatorView: View {
                             .resizable()
                             .renderingMode(.template)
                             .foregroundStyle(.naqaLightPurple)
-                            .frame(width: 15,height: 15)
+                            .frame(width: 15, height: 15)
                     }
+                    
                     HStack {
                         Text("نسبة التطهير")
                         Spacer()
                         Text("%\(result.purificationRate.rounded(to: 4))")
                     }
+                    
+
+                    if let yearly = result.yearlyBreakdown, !yearly.isEmpty {
+                        Divider()
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text(.init("تفصيل سنوي"))
+                                .font(.headline)
+                            ForEach(yearly) { year in
+                                VStack(alignment: .leading, spacing: 4) {
+                                    HStack {
+                                        Text("\(Double(year.year).rounded(to: 0)) - \(Helper.isCurrentLanguageArabic() ? year.companyNameAr : year.companyNameEn)")
+                                        Spacer()
+                                        Text("%\(year.purificationRate.rounded(to: 4))")
+                                    }
+                                    HStack {
+                                        Text(.init("Yealy_Purification_Amount"))
+                                        Spacer()
+                                        Text(year.purificationAmount.rounded(to: 4))
+                                        Image("sar")
+                                            .resizable()
+                                            .renderingMode(.template)
+                                            .foregroundStyle(.naqaLightPurple)
+                                            .frame(width: 15, height: 15)
+                                    }
+                                    HStack {
+                                        Text(.init("Days_In_Period"))
+                                        Spacer()
+                                        Text("\(year.daysInPeriod)")
+                                    }
+                                    HStack {
+                                        Text(.init("Sharing_Opinion"))
+                                        Spacer()
+                                        Text(.init(year.shariaOpinion))
+                                    }
+                                }
+                                .padding(.vertical, 6)
+                                Divider()
+                            }
+                        }
+                    }
+                    
+                    if PostHogSDK.shared.isFeatureEnabled("EHSAN") {
+                        ehsan
+                    }
                 }
-                
-                if PostHogSDK.shared.isFeatureEnabled("EHSAN") {
-                    ehsan
-                }
-                
+                .padding()
             }
+
         }
         .logEvent("CalculatorView_Opened")
         .toolbar { ToolbarItem(placement: .topBarLeading) { clearButton } }
@@ -191,12 +233,11 @@ struct SearchCompaniesView: View {
                         Text(Helper.isCurrentLanguageArabic() ? stock.name_ar : stock.name_en)                        .foregroundStyle(colorScheme == .dark ? .white : .black)
                             .minimumScaleFactor(0.5)
                             .lineLimit(1)
-                            .font(.system(size: Helper.isCurrentLanguageArabic() ? 17 : 10))
+                            .font(.system(size: Helper.isCurrentLanguageArabic() ? 17 : 13))
                         Text(stock.code)
                             .font(.caption)
                             .foregroundStyle(.gray)
                     }
-             
                 }
             }
         }

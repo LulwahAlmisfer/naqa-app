@@ -20,6 +20,13 @@ struct CustomTextField: UIViewRepresentable {
     func makeUIView(context: Context) -> UITextField {
         let textField = UITextField()
         textField.placeholder = NSLocalizedString(placeholder, comment: "")
+        
+        if Helper.isCurrentLanguageArabic() {
+            textField.textAlignment = .right
+        } else {
+            textField.textAlignment = .left
+        }
+        
         textField.keyboardType = .asciiCapableNumberPad
         textField.inputAccessoryView = context.coordinator.createToolbar() // Add Done button
         textField.delegate = context.coordinator
@@ -45,15 +52,21 @@ struct CustomTextField: UIViewRepresentable {
             text = textField.text ?? ""
         }
 
-        // ✅ Create a "Done" button above the keyboard
+
         func createToolbar() -> UIToolbar {
             let toolbar = UIToolbar()
             toolbar.sizeToFit()
 
-            let doneButton = UIBarButtonItem(title: "تم", style: .done, target: self, action: #selector(dismissKeyboard))
+
+            let done = String(localized: "Done", comment: "Button title for dismissing keyboard")
+            let doneButton = UIBarButtonItem(title: done, style: .done, target: self, action: #selector(dismissKeyboard))
             let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
 
-            toolbar.items = [flexibleSpace, doneButton] // Align "Done" to the right
+            if Helper.isCurrentLanguageArabic() {
+                toolbar.items = [doneButton, flexibleSpace]
+            } else {
+                toolbar.items = [flexibleSpace, doneButton]
+            }
             return toolbar
         }
 
