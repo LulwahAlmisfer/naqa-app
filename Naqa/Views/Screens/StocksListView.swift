@@ -140,7 +140,7 @@ struct StocksListView: View {
                         Text(.init("موقع المقاصد"))
                      }
                 }
-                .padding()
+                .ignoresSafeArea(.all)
                 .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
             }

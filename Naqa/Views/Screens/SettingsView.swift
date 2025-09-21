@@ -61,10 +61,12 @@ struct SettingsView: View {
             .scrollIndicators(.hidden)
             .navigationTitle("عن نقاء")
             .toolbar {
-                ToolbarItem(placement: .automatic) {
+                if showIconInToolbar {
+                    ToolbarItem(placement: .automatic) {
                         iconToolBar
                             .transition(.opacity)
                             .opacity(showIconInToolbar ? 1 : 0)
+                    }
                 }
             }
         }
@@ -149,14 +151,9 @@ struct SettingsView: View {
     }
     
     var iconToolBar: some View {
-        HStack {
-            Spacer()
-            Image(.naqaIcon)
-                .resizable()
-                .frame(width: 25 ,height: 25)
-            Spacer()
-        }
-        .padding()
+        Image(.naqaIcon)
+            .resizable()
+            .frame(width: 25 ,height: 25)
     }
     
     var team: some View {
