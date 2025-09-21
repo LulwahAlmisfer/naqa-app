@@ -40,7 +40,7 @@ struct CalculatorView: View {
                 CustomTextField("عدد الأسهم", text: $model.stocksCount)
                                  .keyboardType(.asciiCapableNumberPad)
                 
-                picker
+             //  picker
                 
             }
           
@@ -187,6 +187,7 @@ struct CalculatorView: View {
 
     var clearButton: some View {
         Button("مسح"){ model.clear() }
+            .tint(.accent)
     }
     
     var ehsan: some View {
