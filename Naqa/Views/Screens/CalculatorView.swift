@@ -148,28 +148,24 @@ struct CalculatorView: View {
     }
     
     var ehsan: some View {
-        Button(action: {
-            showSheet.toggle()
-        }) {
+        Link(destination: URL(string: "https://ehsan.sa/stockspurification")!) {
             HStack {
                 Image("ehsan")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 20, height: 20) // Match the size
+                    .frame(width: 20, height: 20)
                     .background(.white)
                     .clipShape(.circle)
-                
+
                 Text("تبرع بخدمة إحسان لتطهير الأسهم")
                     .foregroundStyle(colorScheme == .dark ? .white : .black)
                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                
+
                 Image(systemName: "chevron.left")
                     .rotationEffect(layoutDirection == .leftToRight ? Angle(degrees: 180) : Angle(degrees: 0))
             }
-        }
-        .foregroundStyle(.naqaLightPurple)
-        .sheet(isPresented: $showSheet) {
-            WebViewWithBackButton(url: URL(string: "https://ehsan.sa/stockspurification")!)
+        }.onTapGesture {
+            PostHogSDK.shared.capture("CLICKED_DONATE_EHSAN")
         }
     }
 }
@@ -192,6 +188,9 @@ struct SearchCompaniesView: View {
                     AsyncCompanyLogoView(ticker: stock.code, urlString:stock.logo)
                       
                     Text(Helper.isCurrentLanguageArabic() ? stock.name_ar : stock.name_en)                        .foregroundStyle(colorScheme == .dark ? .white : .black)
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(1)
+                        .font(.system(size: Helper.isCurrentLanguageArabic() ? 17 : 10))
                 }
             }
         }
