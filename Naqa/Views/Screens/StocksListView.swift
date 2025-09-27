@@ -23,11 +23,32 @@ struct StocksListView: View {
             selectedMarket == .main ? stock.code <= "9000" : stock.code > "9000"
         }
     }
-
+    
     var body: some View {
+        switch model.viewState {
+        case .loading, .done, .empty, .none:
+            contentView
+        case .failed(let message, let error):
+            failureView(message: message, error: error)
+        }
+    }
+    
+    @ViewBuilder
+    func failureView(message: ViewState.FailureMessage?, error: Error?) -> some View {
+        if let urlError = error as? URLError, urlError.code == .notConnectedToInternet {
+            FailureView(message: "No Internet Connection. Please check your network.") {
+                Task { await model.fetchOnAppear() }
+            }
+        } else {
+            FailureView(message: message?.message ?? "Something went wrong") {
+                Task { await model.fetchOnAppear() }
+            }
+        }
+    }
+    
+    var contentView: some View {
         NavigationStack {
             Form {
-                
                 
                 picker
                 

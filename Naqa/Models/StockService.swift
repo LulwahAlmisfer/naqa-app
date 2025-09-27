@@ -30,7 +30,6 @@ class StockService {
     private func performRequest(endpoint: String) async throws -> Data {
         // first try wtih
         if let primaryResult = try? await makeRequest(baseURL: primaryURL, endpoint: endpoint) {
-            print("first worked")
             return primaryResult
         }
         

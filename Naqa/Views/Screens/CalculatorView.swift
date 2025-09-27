@@ -219,22 +219,41 @@ struct SearchCompaniesView: View {
     @Environment(\.layoutDirection) private var layoutDirection
     @Environment(\.colorScheme) var colorScheme
 
-    
     var body: some View {
-        
-        List(model.screen2FilteredStocks.filter{$0.shariaOpinion != .Prohibited}) { stock in
-            Button{
+        Group {
+            switch model.viewState {
+            case .loading, .done, .empty, .none:
+                companyList
+            case .failed(let message, let error):
+                failureView(message: message, error: error)
+            }
+        }
+        .navigationTitle("الشركات")
+        .navigationBarTitleDisplayMode(.inline)
+        .searchable(
+            text: $model.screen2SearchText,
+            placement: .navigationBarDrawer(displayMode: .always),
+            prompt: "إبحث بالاسم أو الرمز"
+        )
+    }
+
+
+    var companyList: some View {
+        List(model.screen2FilteredStocks.filter { $0.shariaOpinion != .Prohibited }) { stock in
+            Button {
                 model.selectedStock = stock
                 dismiss()
-            }label: {
+            } label: {
                 HStack {
-                    AsyncCompanyLogoView(ticker: stock.code, urlString:stock.logo)
-                     
-                    VStack(alignment: .leading){
-                        Text(Helper.isCurrentLanguageArabic() ? stock.name_ar : stock.name_en)                        .foregroundStyle(colorScheme == .dark ? .white : .black)
+                    AsyncCompanyLogoView(ticker: stock.code, urlString: stock.logo)
+
+                    VStack(alignment: .leading) {
+                        Text(Helper.isCurrentLanguageArabic() ? stock.name_ar : stock.name_en)
+                            .foregroundStyle(colorScheme == .dark ? .white : .black)
                             .minimumScaleFactor(0.5)
                             .lineLimit(1)
                             .font(.system(size: Helper.isCurrentLanguageArabic() ? 17 : 13))
+
                         Text(stock.code)
                             .font(.caption)
                             .foregroundStyle(.gray)
@@ -242,13 +261,22 @@ struct SearchCompaniesView: View {
                 }
             }
         }
-        .navigationTitle("الشركات")
-        .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $model.screen2SearchText,
-                    placement:.navigationBarDrawer(displayMode: .always)
-                    ,prompt:"إبحث بالاسم أو الرمز")
+    }
+
+    @ViewBuilder
+    func failureView(message: ViewState.FailureMessage?, error: Error?) -> some View {
+        if let urlError = error as? URLError, urlError.code == .notConnectedToInternet {
+            FailureView(message: "No Internet Connection. Please check your network.") {
+                Task { await model.fetchOnAppear() }
+            }
+        } else {
+            FailureView(message: message?.message ?? "Something went wrong") {
+                Task { await model.fetchOnAppear() }
+            }
+        }
     }
 }
+
 
 #Preview {
     MainView()
