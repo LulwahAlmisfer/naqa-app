@@ -39,7 +39,7 @@ struct SettingsView: View {
                     rate
 //                    supervision
                     changeLanguage
-                  
+                    version
                 }
                 .onChange(of: geometry.frame(in: .global).minY) { oldValue, newValue in
                     if newValue < 110 {
@@ -74,6 +74,15 @@ struct SettingsView: View {
         
     }
     
+    var version: some View {
+        Text("\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String)")
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+            .padding(.vertical, 8)
+            .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets())
+            .frame(maxWidth: .infinity)
+    }
     var rate: some View {
         
         Link(destination:  URL(string: "https://apps.apple.com/app/id6742379470?action=write-review")!) {
