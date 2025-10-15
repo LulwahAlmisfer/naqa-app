@@ -38,15 +38,17 @@ struct StocksListView: View {
                         } else {
                             Circle()
                                 .foregroundStyle(.white)
-                                .frame(width: 30, height: 30)
+                                .frame(width: 33, height: 33)
                         }
-                        
-                        Text(Helper.isCurrentLanguageArabic() ? stock.name_ar : stock.name_en)
-                            .minimumScaleFactor(0.5)
-                            .lineLimit(1)
-                            .font(.system(size: Helper.isCurrentLanguageArabic() ? 17 : 10))
-                        
-
+                        VStack(alignment: .leading){
+                            Text(Helper.isCurrentLanguageArabic() ? stock.name_ar : stock.name_en)
+                                .minimumScaleFactor(0.5)
+                                .lineLimit(1)
+                                .font(.system(size: Helper.isCurrentLanguageArabic() ? 17 : 10))
+                            Text(stock.code)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
                         
                         Spacer()
                         
