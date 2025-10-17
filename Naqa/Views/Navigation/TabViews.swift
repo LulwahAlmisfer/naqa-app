@@ -9,9 +9,9 @@ import SwiftUI
 import Observation
 
 enum AppScreen: Hashable, Identifiable, CaseIterable {
-    case settings
-    case calculator
     case stocks
+    case calculator
+    case settings
     
     var id: AppScreen { self }
 }

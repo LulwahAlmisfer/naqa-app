@@ -102,3 +102,49 @@ extension Array where Element == Stock {
         }
     }
 }
+
+import Foundation
+
+extension URLRequest {
+
+    
+    func toCurl(redact: Set<String> = []) -> String {
+        var parts: [String] = ["curl"]
+
+
+        let method = httpMethod ?? "GET"
+        if method != "GET" { parts += ["-X", shellEscape(method)] }
+
+
+        if let headers = allHTTPHeaderFields {
+            for (key, value) in headers.sorted(by: { $0.key < $1.key }) {
+                let val = redact.contains(key) ? "REDACTED" : value
+                parts += ["-H", shellEscape("\(key): \(val)")]
+            }
+        }
+
+
+        if let body = httpBody, !body.isEmpty {
+            if let str = String(data: body, encoding: .utf8) {
+                parts += ["--data-raw", shellEscape(str)]
+            } else {
+
+                let b64 = body.base64EncodedString()
+                parts += ["--data-binary", shellEscape("@<(base64 --decode <<< \(b64))")]
+            }
+        }
+
+
+        if let url = url?.absoluteString { parts.append(shellEscape(url)) }
+
+        return parts.joined(separator: " ")
+    }
+}
+
+
+private func shellEscape(_ str: String) -> String {
+
+
+    let escaped = str.replacingOccurrences(of: "'", with: "'\\''")
+    return "'\(escaped)'"
+}

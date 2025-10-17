@@ -103,7 +103,7 @@ enum ShariaOpinion: String, CaseIterable,Codable {
         case .mixed:
             return .yellow
         case .nonCompliant:
-            return .orange
+            return .red
         case .Prohibited:
             return .red
         case .none:

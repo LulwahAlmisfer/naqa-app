@@ -84,6 +84,7 @@ class StockService {
         urlRequest.httpBody = requestBody
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
+        print(urlRequest.toCurl())
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
 
         if let httpResponse = response as? HTTPURLResponse {
