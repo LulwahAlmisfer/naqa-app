@@ -19,7 +19,7 @@ struct AsyncCompanyLogoView: View {
             if let image = loader.image {
                 Image(uiImage: image)
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
+                    .aspectRatio(contentMode: .fit)
             } else if loader.hasFailed {
                 placeHolderView
             } else {
@@ -27,6 +27,7 @@ struct AsyncCompanyLogoView: View {
             }
         }
         .frame(width: 33, height: 33)
+        .background(.white)
         .clipShape(Circle())
         .onAppear {
             if let url = URL(string: urlString) {
