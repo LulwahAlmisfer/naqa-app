@@ -45,7 +45,7 @@ struct StocksListView: View {
                             Text(Helper.isCurrentLanguageArabic() ? stock.name_ar : stock.name_en)
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
-                                .font(.system(size: Helper.isCurrentLanguageArabic() ? 17 : 10))
+                                .font(.system(size: Helper.isCurrentLanguageArabic() ? 17 : 12))
                             Text(stock.code)
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
