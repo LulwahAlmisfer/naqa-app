@@ -10,7 +10,8 @@ import PostHog
 
 @main
 struct NaqaApp: App {
-    @State private var isActive = false
+
+    @State var cloudkitVM = CloudKitPushNotifciationViewModel()
     
     init() {
         
@@ -20,6 +21,8 @@ struct NaqaApp: App {
         let config = PostHogConfig(apiKey: POSTHOG_API_KEY, host: POSTHOG_HOST)
         PostHogSDK.shared.setup(config)
         identifyUser()
+        
+        cloudkitVM.requestNotificationPermissions()
     }
     
     var body: some Scene {
