@@ -40,7 +40,7 @@ struct StocksListView: View {
                 Task { await model.fetchOnAppear() }
             }
         } else {
-            FailureView(message: message?.message ?? "Something went wrong") {
+            FailureView(message: message?.message ?? "Something Went Wrong") {
                 Task { await model.fetchOnAppear() }
             }
         }
@@ -51,6 +51,7 @@ struct StocksListView: View {
             Form {
                 
                 picker
+                    .shimmer(model.viewState)
                 
                 ForEach(model.viewState == .done ? filteredStocks : model.dummyStocks) { stock in
                     HStack {
@@ -88,10 +89,11 @@ struct StocksListView: View {
                             .clipShape(.capsule)
                     }
                 }
+                .shimmer(model.viewState)
+
             }
             .logEvent("StockListView_Opended")
             .disabled(model.viewState == .loading)
-            .shimmer(model.viewState)
             .navigationTitle("القوائم")
             .searchable(text: $model.screen1SearchText,
                         placement: .navigationBarDrawer(displayMode: .always)

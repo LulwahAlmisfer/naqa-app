@@ -29,6 +29,7 @@ class StockService {
 
     private func performRequest(endpoint: String) async throws -> Data {
         // first try wtih
+        print("try first")
         if let primaryResult = try? await makeRequest(baseURL: primaryURL, endpoint: endpoint) {
             return primaryResult
         }

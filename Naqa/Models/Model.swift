@@ -101,6 +101,7 @@ class Model: ObservableObject {
             self.update(viewState: .done)
         } catch let error as StockServiceError {
             handleStockServiceError(error)
+            self.update(viewState: .failed(error:error))
         } catch {
             self.update(viewState: .failed(error:error))
         }

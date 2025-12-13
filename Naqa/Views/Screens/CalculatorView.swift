@@ -270,7 +270,7 @@ struct SearchCompaniesView: View {
                 Task { await model.fetchOnAppear() }
             }
         } else {
-            FailureView(message: message?.message ?? "Something went wrong") {
+            FailureView(message: message?.message ?? "Something Went Wrong") {
                 Task { await model.fetchOnAppear() }
             }
         }

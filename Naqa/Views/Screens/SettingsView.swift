@@ -39,10 +39,11 @@ struct SettingsView: View {
                     rate
 //                    supervision
                     changeLanguage
+
                     version
                 }
                 .onChange(of: geometry.frame(in: .global).minY) { oldValue, newValue in
-                    if newValue < 110 {
+                    if newValue < 120 {
                         withAnimation(Animation.default.delay(0.2)) { showIcon = false }
                     } else {
                         withAnimation(Animation.default.delay(0.2)) { showIcon = true }
@@ -70,19 +71,20 @@ struct SettingsView: View {
                 }
             }
         }
-        
-        
     }
     
     var version: some View {
-        Text("\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String)")
-            .font(.footnote)
-            .foregroundStyle(.secondary)
-            .padding(.vertical, 8)
-            .listRowBackground(Color.clear)
-            .listRowInsets(EdgeInsets())
-            .frame(maxWidth: .infinity)
+        Section {
+            Text("\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String)")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .padding(.vertical, 8)
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets())
+                .frame(maxWidth: .infinity)
+        }
     }
+    
     var rate: some View {
         
         Link(destination:  URL(string: "https://apps.apple.com/app/id6742379470?action=write-review")!) {

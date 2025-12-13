@@ -23,7 +23,7 @@ struct FailureView: View {
                 .padding(.horizontal)
 
             Button(action: retryAction) {
-                Label("Retry", systemImage: "arrow.clockwise")
+                Label(LocalizedStringKey("Retry"), systemImage: "arrow.clockwise")
             }
             .buttonStyle(.borderedProminent)
             .tint(.accent)
