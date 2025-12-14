@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct FailureView: View {
-    let message: String
-    let retryAction: () -> Void
+    public var iconName: String = "wifi.slash"
+    public let message: String
+    public let retryAction: () -> Void
 
     var body: some View {
         VStack(spacing: 16) {
-            Image(systemName: "wifi.slash")
+            Image(systemName: iconName)
                 .font(.system(size: 50))
                 .foregroundColor(.red)
 

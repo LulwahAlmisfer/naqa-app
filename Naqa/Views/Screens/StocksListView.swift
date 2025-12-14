@@ -40,7 +40,7 @@ struct StocksListView: View {
                 Task { await model.fetchOnAppear() }
             }
         } else {
-            FailureView(message: message?.message ?? "Something Went Wrong") {
+            FailureView(iconName:"exclamationmark.circle", message: message?.message ?? "Something Went Wrong") {
                 Task { await model.fetchOnAppear() }
             }
         }
