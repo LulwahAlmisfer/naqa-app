@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct YearlyBreakdown: Codable, Identifiable {
+struct YearlyBreakdown: Codable, Identifiable, Equatable {
     let id = UUID() 
     let year: Int
     let purificationRate: Double
@@ -32,7 +32,7 @@ struct YearlyBreakdown: Codable, Identifiable {
     }
 }
 
-struct CalculatePurificationResponse: Codable {
+struct CalculatePurificationResponse: Codable, Equatable {
     let id: String
     let purificationAmount: Double
     let daysHeld: Int

@@ -12,9 +12,9 @@ struct CalculatorView: View {
     @EnvironmentObject private var model: Model
     @Environment(Router.self) private var router
     @Environment(\.colorScheme) var colorScheme
-
     @Environment(\.layoutDirection) private var layoutDirection
-    @State private var showSheet = false
+   
+    @State private var showResponseSheet = false
 
     var body: some View {
         @Bindable var router = router
@@ -47,75 +47,8 @@ struct CalculatorView: View {
             HoldingPeriodView(selectedYear: $model.screen2SelectedYear, daysCount: $model.daysCount, fromDate: $model.fromDate, toDate: $model.toDate)
             
             calculate
-            
-            if model.isLoadingAnswer {
-                progressView
-            } else if let result = model.response {
-                VStack(spacing: 20) {
-                    HStack {
-                        Text("مبلغ التطهير")
-                        Spacer()
-                        Text(result.purificationAmount.rounded(to: 4))
-                        Image("sar")
-                            .resizable()
-                            .renderingMode(.template)
-                            .foregroundStyle(.naqaLightPurple)
-                            .frame(width: 15, height: 15)
-                    }
-                    
-                    HStack {
-                        Text("نسبة التطهير")
-                        Spacer()
-                        Text("%\(result.purificationRate.rounded(to: 4))")
-                    }
-                    
-
-                    if let yearly = result.yearlyBreakdown, !yearly.isEmpty {
-                        Divider()
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text(.init("تفصيل سنوي"))
-                                .font(.headline)
-                            ForEach(yearly) { year in
-                                VStack(alignment: .leading, spacing: 4) {
-                                    HStack {
-                                        Text("\(Double(year.year).rounded(to: 0)) - \(Helper.isCurrentLanguageArabic() ? year.companyNameAr : year.companyNameEn)")
-                                        Spacer()
-                                        Text("%\(year.purificationRate.rounded(to: 4))")
-                                    }
-                                    HStack {
-                                        Text(.init("Yealy_Purification_Amount"))
-                                        Spacer()
-                                        Text(year.purificationAmount.rounded(to: 4))
-                                        Image("sar")
-                                            .resizable()
-                                            .renderingMode(.template)
-                                            .foregroundStyle(.naqaLightPurple)
-                                            .frame(width: 15, height: 15)
-                                    }
-                                    HStack {
-                                        Text(.init("Days_In_Period"))
-                                        Spacer()
-                                        Text("\(year.daysInPeriod)")
-                                    }
-                                    HStack {
-                                        Text(.init("Sharing_Opinion"))
-                                        Spacer()
-                                        Text(.init(year.shariaOpinion))
-                                    }
-                                }
-                                .padding(.vertical, 6)
-                                Divider()
-                            }
-                        }
-                    }
-                    
-                    if PostHogSDK.shared.isFeatureEnabled("EHSAN") {
-                        ehsan
-                    }
-                }
-                .padding()
-            }
-
+             
+        
         }
         .logEvent("CalculatorView_Opened")
         .toolbar { ToolbarItem(placement: .topBarLeading) { clearButton } }
@@ -126,12 +59,102 @@ struct CalculatorView: View {
             model.selectedStock = nil
             Task { await model.getStocksForScreen2SelectedYear() }
         }
+        .onChange(of: model.response, { oldValue, newValue in
+            showResponseSheet = newValue != nil
+        })
+        .sheet(isPresented: $showResponseSheet) {
+            responseSheetContent
+                .presentationDetents([.fraction(0.70)])
+        }
+    
+    }
+    
+    @ViewBuilder
+    var responseSheetContent: some View {
+        NavigationStack {
+            if model.isLoadingAnswer {
+                progressView
+            } else {
+                ScrollView {
+                    VStack(spacing: 20) {
+                        if let result = model.response {
+                            HStack {
+                                Text("مبلغ التطهير")
+                                Spacer()
+                                Text(result.purificationAmount.rounded(to: 4))
+                                Image("sar")
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .foregroundStyle(.naqaLightPurple)
+                                    .frame(width: 15, height: 15)
+                            }
+                            
+                            HStack {
+                                Text("نسبة التطهير")
+                                Spacer()
+                                Text("%\(result.purificationRate.rounded(to: 4))")
+                            }
+                            
+                            
+                            if let yearly = result.yearlyBreakdown, !yearly.isEmpty {
+                                Divider()
+                                VStack(alignment: .leading, spacing: 12) {
+                                    Text(.init("تفصيل سنوي"))
+                                        .font(.headline)
+                                    ForEach(yearly) { year in
+                                        VStack(alignment: .leading, spacing: 4) {
+                                            HStack {
+                                                Text("\(Double(year.year).rounded(to: 0)) - \(Helper.isCurrentLanguageArabic() ? year.companyNameAr : year.companyNameEn)")
+                                                Spacer()
+                                                Text("%\(year.purificationRate.rounded(to: 4))")
+                                            }
+                                            HStack {
+                                                Text(.init("Yealy_Purification_Amount"))
+                                                Spacer()
+                                                Text(year.purificationAmount.rounded(to: 4))
+                                                Image("sar")
+                                                    .resizable()
+                                                    .renderingMode(.template)
+                                                    .foregroundStyle(.naqaLightPurple)
+                                                    .frame(width: 15, height: 15)
+                                            }
+                                            HStack {
+                                                Text(.init("Days_In_Period"))
+                                                Spacer()
+                                                Text("\(year.daysInPeriod)")
+                                            }
+                                            HStack {
+                                                Text(.init("Sharing_Opinion"))
+                                                Spacer()
+                                                Text(.init(year.shariaOpinion))
+                                            }
+                                        }
+                                        .padding(.vertical, 6)
+                                        Divider()
+                                    }
+                                }
+                            }
+                            
+                            if PostHogSDK.shared.isFeatureEnabled("EHSAN") {
+                                ehsan
+                            }
+                            Spacer()
+                      
+                        }
+                    }
+                    .padding(.horizontal)
+                    .navigationTitle(Text("Result"))
+                
+                }
+                .presentationDragIndicator(.visible)
 
+            }
+        }
     }
     
     var calculate: some View {
-        Group {
-            if model.response == nil {
+//        Group {
+        //    if model.response == nil {
                 Button("إحسب") {
                     PostHogSDK.shared.capture("Calculate_Button_Tapped")
                     hideKeyboard()
@@ -139,18 +162,18 @@ struct CalculatorView: View {
                 }
                 .disabled(model.stocksCount.isEmpty || model.selectedStock == nil)
                 
-            } else {
-                Button {
-                    model.clear()
-                } label: {
-                    HStack {
-                    Spacer()
-                        Image(systemName: "arrow.counterclockwise")
-                            .foregroundStyle(.naqaLightPurple)
-                    }
-                }
-            }
-        }
+//            } else {
+//                Button {
+//                    model.clear()
+//                } label: {
+//                    HStack {
+//                    Spacer()
+//                        Image(systemName: "arrow.counterclockwise")
+//                            .foregroundStyle(.naqaLightPurple)
+//                    }
+//                }
+//            }
+//        }
     }
     
     var progressView: some View {
