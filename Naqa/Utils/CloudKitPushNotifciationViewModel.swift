@@ -39,8 +39,8 @@ class CloudKitPushNotifciationViewModel: ObservableObject {
             notification.title = "قائمة المقاصد الجديدة متوفرة الآن"
             notification.alertBody = "افتح التطبيق للاطلاع على القائمة."
         } else {
-            notification.title = "New Maqasid list is now available"
-            notification.alertBody = "Open the app to check the new list."
+            notification.title = "New list is now available"
+            notification.alertBody = "Open the app to check the list."
         }
         notification.soundName = "default"
 
