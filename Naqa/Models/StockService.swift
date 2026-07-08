@@ -20,8 +20,8 @@ class StockService {
     let primaryURL: URL
     let secondaryURL: URL
     
-    init(primaryURL: URL = URL(string:"https://naqaa.anqorithm.co/api/v1")!,
-         secondaryURL: URL = URL(string:"https://naqa.anqorithm.co/api/v1")!) {
+    init(primaryURL: URL = URL(string:"https://naqaa.anqorithm.duckdns.org/api/v1")!,
+         secondaryURL: URL = URL(string:"https://naqaa.anqorithm.duckdns.org/api/v1")!) {
         self.primaryURL = primaryURL
         self.secondaryURL = secondaryURL
     }
